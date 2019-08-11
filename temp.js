@@ -4,11 +4,32 @@ import { createStackNavigator, createAppContainer, withOrientation ,createBottom
 import { ThemeProvider, Header } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons'; 
 
+
+async function loadGraphicCards(page=1){
+
+  const searchUrl ='https://www.amazon.de/s/?page=${page}&keywords=graphic+card';
+  const response = await fetch(searchUrl);
+
+  const htmlString = await response.text();
+  const $ = cheerio.load(htmlString);
+
+  const liList = $("#s-results-list-atf > li").map((_, li)=>
+  ({
+    asin: $(li).data("asin"),
+    title: $("h2",li).text(),
+    price: $("span.a-color-price",li).text(),
+    rating: $("span.a-icon-alt",li).text(),
+    imageUrl: $("img.s-access-image").att('src')
+  }));
+
+}
+
+
 class HomeScreen extends React.Component {
   static navigationOptions =({navigation})=>({
    Title: 'Home',
     headerRight: <Button title='About'
-    onPress={() => navigation.navigate('About')}>
+    onPress={() => navigation.navigate('Display')}>
     </Button>
   });
   render() {
@@ -133,9 +154,10 @@ const topNav = createMaterialTopTabNavigator(
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   About: AboutScreen,
+  Display: Display,
   },
   {
-    initialRouteName: "About",
+    initialRouteName: "Home",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#553D32',
@@ -146,6 +168,36 @@ const AppNavigator = createStackNavigator({
       },
     },
   }
+);
+
+class Display extends Reach.Component{
+  state={
+    page: 0,
+    items: [],
+  };
+
+  componentDidMount=()=>this.loadNextPage();
+
+  loadNextPage=()=>
+  this.setState(async state =>{
+    const page = state.page +1;
+    const items = await loadGraphicCards(page);
+    return {item, page};
+  });
+
+  render =()=>(
+    <ScrollView>
+      {this.state.items.map(item => <Item {...item} key={item.asin}/>)}
+    </ScrollView>
+  );
+}
+const Item = props=> (
+  <TouchableOpacity onPress={() => alert("ASIN:" + props.asin)}>
+    <Text>{props.title}</Text>
+    <Image source={{uri: props.imageUrl}}/>
+    <Text>{props.price}</Text>
+    <Text>{props.rating}</Text>
+  </TouchableOpacity>
 );
 
 const AppContainer = createAppContainer(AppNavigator);

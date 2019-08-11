@@ -16,11 +16,6 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
         <Text>Home Screen</Text>
       </View>
-      /* <Button
-         title="About the app"
-         onPress={() => this.props.navigation.navigate('About')}
-       ></Button>
-      */
     );
   }
 }
@@ -70,64 +65,6 @@ class AboutScreen extends React.Component {
   }
 }
 
-// craete top navigation bar
-const topNav = createMaterialTopTabNavigator(
-  {
-    // list each route
-    Home: {
-      screen: HomeScreen,
-      navigationOptions:{
-        
-        tabBarLabel: "Home"
-      }
-    },
-    Aboutus:{
-      screen: AboutScreen,
-      navigationOptions:{
-        tabBarLabel:"About Us"
-      }
-    },
-
-  },
-  {
-    initialRouteName: 'Home',
-    tabBarOptions:{
-     // color before press
-      activeTintColor: 'tomato',
-      inactiveTintColor: '#000000',
-      activeBackgroundColor:'#ffcbcb',
-      pressColor: '#efefef',
-      tabBarPosition: 'top',
-      indicatorStyle: {
-        backgroundColor: '#c83660',
-        height: 2,
-      },
-      labelStyle: {
-        fontSize: 15,
-      },
-      tabStyle: {
-        height: 50,
-        marginHorizontal: 20,
-      },
-        style: {
-        paddingTop:20,
-        backgroundColor: 'white',
-        borderBottomWidth: 0,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0,
-        shadowRadius: 0,
-        elevation: 0,
-        }
-    },
-    
-    },
-  
-)
-
 // Stack navigator 
 // we can have different format of navigator bottom , top , stack or none button in return to //render those page
 const AppNavigator = createStackNavigator({
@@ -135,7 +72,7 @@ const AppNavigator = createStackNavigator({
   About: AboutScreen,
   },
   {
-    initialRouteName: "About",
+    initialRouteName: "Home",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#553D32',

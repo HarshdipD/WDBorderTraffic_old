@@ -135,7 +135,7 @@ const AppNavigator = createStackNavigator({
   About: AboutScreen,
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "About",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#553D32',

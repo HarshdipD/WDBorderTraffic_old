@@ -1,26 +1,32 @@
 import * as React from 'react';
-import { Button, StyleSheet, Text, View, Linking, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View, Linking, TouchableOpacity, ImageBackground } from 'react-native';
 import { createStackNavigator, createAppContainer, withOrientation ,createBottomTabNavigator,createMaterialTopTabNavigator ,TabBarBottom } from "react-navigation";
 import { ThemeProvider, Header } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons'; 
 
 class HomeScreen extends React.Component {
   static navigationOptions =({navigation})=>({
-   Title: 'Home',
-    headerRight: <Button title='About'
-    onPress={() => navigation.navigate('About')}>
-    </Button>
+    headerTitle: 'Home',
+    headerRight: <TouchableOpacity onPress={() => navigation.navigate('About')}>
+      <Text style={{color: 'white', paddingRight: 20}}>About</Text>
+      </TouchableOpacity>
   });
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Home Screen</Text>
+      <View style={HomeStyle.container}>
+        <View style={HomeStyle.CompareContainer}>
+          <Text>Compare commute will come here</Text>
+        </View>
+        <View style={HomeStyle.BridgeContainer}>
+          <ImageBackground source={require('./images/bridge.jpg')} style={{width: '100%', height: '100%', opacity: 0.5}}><Text style={HomeStyle.TextHead}>Bridge Wait Times</Text></ImageBackground>
+        </View>
+        <View style={HomeStyle.TunnelContainer}>
+          <Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
+        </View>
+        <View style={HomeStyle.AdSupportContainer}>
+          <Text style={{color: 'white', textAlign: 'center'}}>Support this App - watch this ad</Text>
+        </View>
       </View>
-      /* <Button
-         title="About the app"
-         onPress={() => this.props.navigation.navigate('About')}
-       ></Button>
-      */
     );
   }
 }
@@ -70,64 +76,6 @@ class AboutScreen extends React.Component {
   }
 }
 
-// craete top navigation bar
-const topNav = createMaterialTopTabNavigator(
-  {
-    // list each route
-    Home: {
-      screen: HomeScreen,
-      navigationOptions:{
-        
-        tabBarLabel: "Home"
-      }
-    },
-    Aboutus:{
-      screen: AboutScreen,
-      navigationOptions:{
-        tabBarLabel:"About Us"
-      }
-    },
-
-  },
-  {
-    initialRouteName: 'Home',
-    tabBarOptions:{
-     // color before press
-      activeTintColor: 'tomato',
-      inactiveTintColor: '#000000',
-      activeBackgroundColor:'#ffcbcb',
-      pressColor: '#efefef',
-      tabBarPosition: 'top',
-      indicatorStyle: {
-        backgroundColor: '#c83660',
-        height: 2,
-      },
-      labelStyle: {
-        fontSize: 15,
-      },
-      tabStyle: {
-        height: 50,
-        marginHorizontal: 20,
-      },
-        style: {
-        paddingTop:20,
-        backgroundColor: 'white',
-        borderBottomWidth: 0,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0,
-        shadowRadius: 0,
-        elevation: 0,
-        }
-    },
-    
-    },
-  
-)
-
 // Stack navigator 
 // we can have different format of navigator bottom , top , stack or none button in return to //render those page
 const AppNavigator = createStackNavigator({
@@ -135,7 +83,7 @@ const AppNavigator = createStackNavigator({
   About: AboutScreen,
   },
   {
-    initialRouteName: "About",
+    initialRouteName: "Home",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#553D32',
@@ -192,4 +140,33 @@ const styles = StyleSheet.create({
   },
 });
 
+const HomeStyle = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  CompareContainer: {
+    flex: 2,
+    backgroundColor: 'white',
+  },
+  BridgeContainer: {
+    flex: 3,
+    backgroundColor: '#3094a1',
+  },
+  TunnelContainer: {
+    flex: 3,
+    backgroundColor: '#545454',
+  },
+  AdSupportContainer: {
+    flex: 1,
+    backgroundColor: 'black',
+    color: 'white',
+    },
+  TextHead: {
+    color: 'white',
+    paddingLeft: 10,
+    paddingTop: 20,
+    textTransform: 'uppercase',
+    fontSize: 15,
+  },
 
+});

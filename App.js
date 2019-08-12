@@ -15,7 +15,7 @@ export default class WebData extends Component{
   }
   fetchData = async()=>
   { try{
-    const res = await fetch('https://raw.githubusercontent.com/Hardeepcoder/fake_json/master/Users');
+    const res = await fetch('http://leanp.myweb.cs.uwindsor.ca/60334/users');
     const users = await res.json();
     this.setState({data: users});
     console.log(this.state.data);

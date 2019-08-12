@@ -1,9 +1,52 @@
-import * as React from 'react';
-import { Button, StyleSheet, Text, View, Linking, TouchableOpacity, ImageBackground } from 'react-native';
+import React ,{Component}from 'react';
+import {FlatList, Button, StyleSheet, Text, View, Linking, TouchableOpacity, ImageBackground } from 'react-native';
 import { createStackNavigator, createAppContainer, withOrientation ,createBottomTabNavigator,createMaterialTopTabNavigator ,TabBarBottom } from "react-navigation";
 import { ThemeProvider, Header } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons'; 
 
+export default class WebData extends Component{
+  constructor(props){
+    super(props);
+      this.state={
+        
+        data: []
+      
+    }
+  }
+  fetchData = async()=>
+  { try{
+    const res = await fetch('http://leanp.myweb.cs.uwindsor.ca/60334/users');
+    const users = await res.json();
+    this.setState({data: users});
+    console.log(this.state.data);
+  }
+  catch(error){
+    console.error(error);
+  }
+  }
+  componentDidMount(){
+    this.fetchData();
+  }
+
+  render(){
+    return(
+      <View style={styles.AboutContainer}>
+        <Text>Welcome the information</Text>
+        <FlatList
+        data={this.state.data}
+        keyExtractor={(item,index)=> index.toString()}
+        renderItem={({item})=>
+        <View>
+          <Text>{ item.username}</Text>
+        <Text>{ item.id}</Text>
+          </View>
+      }>
+
+      </FlatList>
+      </View>
+    )
+  }
+}
 class HomeScreen extends React.Component {
   static navigationOptions =({navigation})=>({
     headerTitle: 'Home',
@@ -98,7 +141,7 @@ const AppNavigator = createStackNavigator({
 
 const AppContainer = createAppContainer(AppNavigator);
 
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return <AppContainer />;
   }

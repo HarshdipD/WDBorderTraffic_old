@@ -4,7 +4,7 @@ import { createStackNavigator, createAppContainer, withOrientation ,createBottom
 import { ThemeProvider, Header } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons'; 
 
-export default class WebData extends Component{
+class WebData extends Component{
   constructor(props){
     super(props);
       this.state={
@@ -75,9 +75,12 @@ class HomeScreen extends React.Component {
 }
 
 class AboutScreen extends React.Component {
-  static navigationOptions ={
-    title: 'About'
-  };
+  static navigationOptions =({navigation})=>({
+    headerTitle: 'About',
+    headerRight: <TouchableOpacity onPress={() => navigation.navigate('Data')}>
+      <Text style={{color: 'white', paddingRight: 20}}>Data</Text>
+      </TouchableOpacity>
+  });
   render() {
     return(
       <View style={{flex: 1, flexDirection: 'column'}}>
@@ -124,6 +127,7 @@ class AboutScreen extends React.Component {
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   About: AboutScreen,
+  Data: WebData,
   },
   {
     initialRouteName: "Home",
@@ -141,7 +145,7 @@ const AppNavigator = createStackNavigator({
 
 const AppContainer = createAppContainer(AppNavigator);
 
-class App extends React.Component {
+export default class App extends React.Component {
   render() {
     return <AppContainer />;
   }

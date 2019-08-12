@@ -47,6 +47,7 @@ class WebData extends Component{
     )
   }
 }
+
 class HomeScreen extends React.Component {
   static navigationOptions =({navigation})=>({
     headerTitle: 'Home',
@@ -61,10 +62,18 @@ class HomeScreen extends React.Component {
           <Text>Compare commute will come here</Text>
         </View>
         <View style={HomeStyle.BridgeContainer}>
-          <ImageBackground source={require('./images/bridge.jpg')} style={{width: '100%', height: '100%', opacity: 0.5}}><Text style={HomeStyle.TextHead}>Bridge Wait Times</Text></ImageBackground>
+          <ImageBackground source={require('./images/bridge.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={{backgroundColor: 'rgba(45, 166, 158, 0.5)', height: '100%', width: '100%'}}>
+              <Text style={HomeStyle.TextHead}>Bridge Wait Times</Text>
+            </View>
+          </ImageBackground>
         </View>
         <View style={HomeStyle.TunnelContainer}>
-          <Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
+          <ImageBackground source={require('./images/tunnel.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={{backgroundColor: 'rgba(143, 143, 143, 0.5)', height: '100%', width: '100%'}}>
+              <Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
+            </View>
+          </ImageBackground>
         </View>
         <View style={HomeStyle.AdSupportContainer}>
           <Text style={{color: 'white', textAlign: 'center'}}>Support this App - watch this ad</Text>
@@ -211,9 +220,10 @@ const HomeStyle = StyleSheet.create({
   TextHead: {
     color: 'white',
     paddingLeft: 10,
-    paddingTop: 20,
+    paddingTop: 15,
     textTransform: 'uppercase',
-    fontSize: 15,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 
 });

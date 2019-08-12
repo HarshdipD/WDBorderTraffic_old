@@ -1,9 +1,52 @@
-import * as React from 'react';
-import { Button, StyleSheet, Text, View, Linking, TouchableOpacity, ImageBackground } from 'react-native';
+import React ,{Component}from 'react';
+import {FlatList, Button, StyleSheet, Text, View, Linking, TouchableOpacity, ImageBackground } from 'react-native';
 import { createStackNavigator, createAppContainer, withOrientation ,createBottomTabNavigator,createMaterialTopTabNavigator ,TabBarBottom } from "react-navigation";
 import { ThemeProvider, Header } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons'; 
 
+class WebData extends Component{
+  constructor(props){
+    super(props);
+      this.state={
+        
+        data: []
+      
+    }
+  }
+  fetchData = async()=>
+  { try{
+    const res = await fetch('http://leanp.myweb.cs.uwindsor.ca/60334/users');
+    const users = await res.json();
+    this.setState({data: users});
+    console.log(this.state.data);
+  }
+  catch(error){
+    console.error(error);
+  }
+  }
+  componentDidMount(){
+    this.fetchData();
+  }
+
+  render(){
+    return(
+      <View style={styles.AboutContainer}>
+        <Text>Welcome the information</Text>
+        <FlatList
+        data={this.state.data}
+        keyExtractor={(item,index)=> index.toString()}
+        renderItem={({item})=>
+        <View>
+          <Text>{ item.username}</Text>
+        <Text>{ item.id}</Text>
+          </View>
+      }>
+
+      </FlatList>
+      </View>
+    )
+  }
+}
 class HomeScreen extends React.Component {
   static navigationOptions =({navigation})=>({
     headerTitle: 'Home',
@@ -32,9 +75,12 @@ class HomeScreen extends React.Component {
 }
 
 class AboutScreen extends React.Component {
-  static navigationOptions ={
-    title: 'About'
-  };
+  static navigationOptions =({navigation})=>({
+    headerTitle: 'About',
+    headerRight: <TouchableOpacity onPress={() => navigation.navigate('Data')}>
+      <Text style={{color: 'white', paddingRight: 20}}>Data</Text>
+      </TouchableOpacity>
+  });
   render() {
     return(
       <View style={{flex: 1, flexDirection: 'column'}}>
@@ -81,6 +127,7 @@ class AboutScreen extends React.Component {
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   About: AboutScreen,
+  Data: WebData,
   },
   {
     initialRouteName: "Home",

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React ,{Component}from 'react';
 import { Button, StyleSheet, Text, View, Linking, TouchableOpacity } from 'react-native';
 import { createStackNavigator, createAppContainer, withOrientation ,createBottomTabNavigator,createMaterialTopTabNavigator ,TabBarBottom } from "react-navigation";
 import { ThemeProvider, Header } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons'; 
-
+import { cheerio} from 'cheerio-without-node-native';
 
 async function loadGraphicCards(page=1){
 
@@ -91,70 +91,14 @@ class AboutScreen extends React.Component {
   }
 }
 
-// craete top navigation bar
-const topNav = createMaterialTopTabNavigator(
-  {
-    // list each route
-    Home: {
-      screen: HomeScreen,
-      navigationOptions:{
-        
-        tabBarLabel: "Home"
-      }
-    },
-    Aboutus:{
-      screen: AboutScreen,
-      navigationOptions:{
-        tabBarLabel:"About Us"
-      }
-    },
 
-  },
-  {
-    initialRouteName: 'Home',
-    tabBarOptions:{
-     // color before press
-      activeTintColor: 'tomato',
-      inactiveTintColor: '#000000',
-      activeBackgroundColor:'#ffcbcb',
-      pressColor: '#efefef',
-      tabBarPosition: 'top',
-      indicatorStyle: {
-        backgroundColor: '#c83660',
-        height: 2,
-      },
-      labelStyle: {
-        fontSize: 15,
-      },
-      tabStyle: {
-        height: 50,
-        marginHorizontal: 20,
-      },
-        style: {
-        paddingTop:20,
-        backgroundColor: 'white',
-        borderBottomWidth: 0,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0,
-        shadowRadius: 0,
-        elevation: 0,
-        }
-    },
-    
-    },
-  
-)
 
 // Stack navigator 
 // we can have different format of navigator bottom , top , stack or none button in return to //render those page
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   About: AboutScreen,
-  Display: Display,
+  Display: DisplayScreen,
   },
   {
     initialRouteName: "Home",
@@ -170,7 +114,7 @@ const AppNavigator = createStackNavigator({
   }
 );
 
-class Display extends Reach.Component{
+export default class DisplayScreen extends React.Component{
   state={
     page: 0,
     items: [],
@@ -186,9 +130,9 @@ class Display extends Reach.Component{
   });
 
   render =()=>(
-    <ScrollView>
+    <View style={styles.container}>
       {this.state.items.map(item => <Item {...item} key={item.asin}/>)}
-    </ScrollView>
+    </View>
   );
 }
 const Item = props=> (
@@ -202,7 +146,7 @@ const Item = props=> (
 
 const AppContainer = createAppContainer(AppNavigator);
 
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return <AppContainer />;
   }

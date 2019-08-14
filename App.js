@@ -16,7 +16,7 @@ class WebData extends Component{
   fetchData = async()=>
   { try{
     
-    const res = await fetch('http://192.168.1.35:3001/user');
+    const res = await fetch('http://192.168.1.35:3003/user');
     const users = await res.json();
     this.setState({data: users});
     console.log(this.state.data);

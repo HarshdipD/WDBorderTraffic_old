@@ -9,9 +9,9 @@ const rp = require('request-promise');
 const $ = require('cheerio');
 
 
-// go to localhost 8000 --> if it doesnt work --> change to any number
+// go to localhost 3003 --> if it doesnt work --> change to any number
 
-var server = app.listen(3001, function(){
+var server = app.listen(3003, function(){
     var host = server.address().address
     var port = server.address().port
     console.log("start");
@@ -48,7 +48,7 @@ rp(url)
 
 // intialize jsonfile variable
 var jsonData;
-// send it to localhost:8000/user 
+// send it to localhost:3003/user 
 app.get('/user', function(req,res){
 
     res.send(jsonData);

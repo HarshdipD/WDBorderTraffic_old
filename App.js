@@ -15,7 +15,8 @@ class WebData extends Component{
   }
   fetchData = async()=>
   { try{
-    const res = await fetch('http://leanp.myweb.cs.uwindsor.ca/60334/users');
+    
+    const res = await fetch('http://192.168.1.35:3001/user');
     const users = await res.json();
     this.setState({data: users});
     console.log(this.state.data);
@@ -37,8 +38,11 @@ class WebData extends Component{
         keyExtractor={(item,index)=> index.toString()}
         renderItem={({item})=>
         <View>
-          <Text>{ item.username}</Text>
-        <Text>{ item.id}</Text>
+          <Text>{'\n\n'+item.lane}</Text>
+        <Text>{ item.details.Status}</Text>
+        <Text>{ item.details.time}</Text>
+        <Text>{ item.details.delay}</Text>
+        <Text>{ item.enterCanada}</Text>
           </View>
       }>
 

@@ -2,7 +2,19 @@ import React ,{Component}from 'react';
 import {FlatList, Button, StyleSheet, Text, View, Linking, TouchableOpacity, ImageBackground } from 'react-native';
 import { createStackNavigator, createAppContainer, withOrientation ,createBottomTabNavigator,createMaterialTopTabNavigator ,TabBarBottom } from "react-navigation";
 import { ThemeProvider, Header } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
+import * as Font from 'expo-font';
+
+export default class App extends React.Component {
+  componentDidMount() {
+    Font.loadAsync({
+      'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    });
+  }
+  render() {
+    return <AppContainer />;
+  }
+}
 
 class WebData extends Component{
   constructor(props){
@@ -32,7 +44,7 @@ class WebData extends Component{
   render(){
     return(
       <View style={styles.AboutContainer}>
-        <Text>Welcome the information</Text>
+        <Text style={{fontFamily: 'open-sans'}}>Welcome the information</Text>
         <FlatList
         data={this.state.data}
         keyExtractor={(item,index)=> index.toString()}
@@ -52,41 +64,6 @@ class WebData extends Component{
   }
 }
 
-class HomeScreen extends React.Component {
-  static navigationOptions =({navigation})=>({
-    headerTitle: 'Home',
-    headerRight: <TouchableOpacity onPress={() => navigation.navigate('About')}>
-      <Text style={{color: 'white', paddingRight: 20}}>About</Text>
-      </TouchableOpacity>
-  });
-  render() {
-    return (
-      <View style={HomeStyle.container}>
-        <View style={HomeStyle.CompareContainer}>
-          <Text>Compare commute will come here</Text>
-        </View>
-        <View style={HomeStyle.BridgeContainer}>
-          <ImageBackground source={require('./images/bridge.jpg')} style={{width: '100%', height: '100%'}}>
-            <View style={{backgroundColor: 'rgba(45, 166, 158, 0.5)', height: '100%', width: '100%'}}>
-              <Text style={HomeStyle.TextHead}>Bridge Wait Times</Text>
-            </View>
-          </ImageBackground>
-        </View>
-        <View style={HomeStyle.TunnelContainer}>
-          <ImageBackground source={require('./images/tunnel.jpg')} style={{width: '100%', height: '100%'}}>
-            <View style={{backgroundColor: 'rgba(143, 143, 143, 0.5)', height: '100%', width: '100%'}}>
-              <Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
-            </View>
-          </ImageBackground>
-        </View>
-        <View style={HomeStyle.AdSupportContainer}>
-          <Text style={{color: 'white', textAlign: 'center'}}>Support this App - watch this ad</Text>
-        </View>
-      </View>
-    );
-  }
-}
-
 class AboutScreen extends React.Component {
   static navigationOptions =({navigation})=>({
     headerTitle: 'About',
@@ -99,7 +76,7 @@ class AboutScreen extends React.Component {
       <View style={{flex: 1, flexDirection: 'column'}}>
         <View style={styles.AboutContainer}>
           <Text style={styles.head}>Windsor-Detroit Border Traffic
-            <Text style={{fontWeight: 'normal', fontSize: 15}}>
+            <Text style={{fontWeight: 'normal', fontSize: 15, fontFamily: 'open-sans'}}>
               {"\n"}
               {"\n"}
               The Windsor-Detroit Border Traffic app is developed and maintained by two students at University of Windsor.
@@ -135,34 +112,184 @@ class AboutScreen extends React.Component {
   }
 }
 
+class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={HomeStyle.container}>
+        <View style={HomeStyle.CompareContainer}>
+          <Text style={HomeStyle.CompareText}>Tunnel seems faster than bridge {'\n'} by 10 minutes</Text>
+        </View>
+        <View style={HomeStyle.BridgeContainer}>
+          <ImageBackground source={require('./images/bridge.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={{backgroundColor: 'rgba(45, 166, 158, 0.6)', height: '100%', width: '100%'}}>
+              <Text style={HomeStyle.TextHead}>Bridge Wait Times</Text>
+
+              <View style={{ flex: 1, flexDirection: 'column', padding: 20, alignContent: 'center', alignItems: 'center'}}>
+                  <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row'}}>
+                    <View style={{ flex: 1, alignSelf: 'stretch', alignContent: 'center', alignItems: 'center' }}><Text>USA to Canada</Text></View>
+                    <View style={{ flex: 1, alignSelf: 'stretch', alignContent: 'center', alignItems: 'center'  }}><Text>Canada to USA</Text></View>
+                  </View>
+                  <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row' }}>
+                    <View style={{ flex: 1, alignSelf: 'stretch', alignContent: 'center', alignItems: 'center'  }}><Text>No Delay</Text></View>
+                    <View style={{ flex: 1, alignSelf: 'stretch', alignContent: 'center', alignItems: 'center'  }}><Text>20 min</Text></View>
+                  </View>
+              </View>
+                
+            </View>
+          </ImageBackground>
+        </View>
+        <View style={HomeStyle.TunnelContainer}>
+          <ImageBackground source={require('./images/tunnel.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={{backgroundColor: 'rgba(143, 143, 143, 0.5)', height: '100%', width: '100%'}}>
+              <Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <View style={HomeStyle.AdSupportContainer}>
+          <Text style={{color: 'white', textAlign: 'center'}}>Support this App - watch this ad</Text>
+        </View>
+      </View>
+    );
+  }
+}
+
+class CommercialVehicleScreen extends React.Component {
+  static navigationOptions =({navigation})=>({
+    headerTitle: 'About',
+    headerRight: <TouchableOpacity onPress={() => navigation.navigate('Data')}>
+      <Text style={{color: 'white', paddingRight: 20}}>Data</Text>
+      </TouchableOpacity>
+  });
+  render() {
+    return(
+      <View style={HomeStyle.container}>
+        <View style={HomeStyle.CompareContainer}>
+          <Text style={HomeStyle.CompareText}>Tunnel seems faster than bridge {'\n'} by 10 minutes</Text>
+        </View>
+        <View style={HomeStyle.BridgeContainer}>
+          <ImageBackground source={require('./images/bridge.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={{backgroundColor: 'rgba(45, 166, 158, 0.5)', height: '100%', width: '100%'}}>
+              <Text style={HomeStyle.TextHead}>Bridge Wait Times</Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <View style={HomeStyle.TunnelContainer}>
+          <ImageBackground source={require('./images/tunnel.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={{backgroundColor: 'rgba(143, 143, 143, 0.5)', height: '100%', width: '100%'}}>
+              <Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <View style={HomeStyle.AdSupportContainer}>
+          <Text style={{color: 'white', textAlign: 'center'}}>Support this App - watch this ad</Text>
+        </View>
+      </View>
+    );
+  }
+}
+
+class NexusScreen extends React.Component {
+  static navigationOptions =({navigation})=>({
+    headerTitle: 'About',
+    headerRight: <TouchableOpacity onPress={() => navigation.navigate('Data')}>
+      <Text style={{color: 'white', paddingRight: 20}}>Data</Text>
+      </TouchableOpacity>
+  });
+  render() {
+    return(
+      <View style={HomeStyle.container}>
+        <View style={HomeStyle.CompareContainer}>
+          <Text style={HomeStyle.CompareText}>Tunnel seems faster than bridge {'\n'} by 10 minutes</Text>
+        </View>
+        <View style={HomeStyle.BridgeContainer}>
+          <ImageBackground source={require('./images/bridge.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={{backgroundColor: 'rgba(45, 166, 158, 0.5)', height: '100%', width: '100%'}}>
+              <Text style={HomeStyle.TextHead}>Bridge Wait Times</Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <View style={HomeStyle.TunnelContainer}>
+          <ImageBackground source={require('./images/tunnel.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={{backgroundColor: 'rgba(143, 143, 143, 0.5)', height: '100%', width: '100%'}}>
+              <Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <View style={HomeStyle.AdSupportContainer}>
+          <Text style={{color: 'white', textAlign: 'center'}}>Support this App - watch this ad</Text>
+        </View>
+      </View>
+    );
+  }
+}
+
+
 // Stack navigator 
 // we can have different format of navigator bottom , top , stack or none button in return to //render those page
 const AppNavigator = createStackNavigator({
-  Home: HomeScreen,
-  About: AboutScreen,
-  Data: WebData,
-  },
-  {
-    initialRouteName: "Home",
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: '#553D32',
+  Home: {
+    screen: createMaterialTopTabNavigator({
+      PersonalVehicle: {
+        screen: HomeScreen,
+        navigationOptions: ({ navigation }) => ({
+          title: 'Personal',
+        }),
       },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
+      CommercialVehicle: {
+        screen: CommercialVehicleScreen,
+        navigationOptions: ({ navigation }) => ({
+          title: 'Commercial',
+        }),
+      },
+      Nexus: {
+        screen: NexusScreen,
+        navigationOptions: ({ navigation }) => ({
+          title: 'NEXUS',
+        }),
       },
     },
-  }
-);
+    {
+      tabBarOptions: {
+        activeTintColor: '#fff',
+        inactiveTintColor: '#fff',
+        style: {
+          backgroundColor: '#85D4DD',
+        },
+        indicatorStyle: {
+          backgroundColor: '#fff',
+        }
+      },
+    }
+    ),
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Home',
+      headerStyle: {
+        backgroundColor: '#12A3AA',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerRight: <TouchableOpacity onPress={() => navigation.navigate('About')}>
+      <Text style={{color: 'white', paddingRight: 20}}>About</Text>
+      </TouchableOpacity>
+    }),
+  },
+  About: {
+    screen: AboutScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'About',
+    })
+  },
+  Data: {
+    screen: WebData,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+    })
+  },
+});
 
 const AppContainer = createAppContainer(AppNavigator);
 
-export default class App extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -207,6 +334,10 @@ const HomeStyle = StyleSheet.create({
   CompareContainer: {
     flex: 2,
     backgroundColor: 'white',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
   },
   BridgeContainer: {
     flex: 3,
@@ -229,5 +360,8 @@ const HomeStyle = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-
+  CompareText: {
+    fontSize: 15,
+    textAlign: 'center',
+  },
 });

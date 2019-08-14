@@ -37,6 +37,29 @@ const HomeStyle = StyleSheet.create({
       fontSize: 15,
       textAlign: 'center',
     },
+    tableLay: {
+      flex: 1,
+      flexDirection: 'column',
+      marginHorizontal: 60,
+      marginVertical: 50,
+      alignContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      opacity: 0.8, 
+    },
+    tableRow: {
+      flex: 1,
+      alignSelf: 'stretch',
+      flexDirection: 'row',
+    },
+    tableCol: {
+      flex: 1,
+      alignSelf: 'stretch',
+      alignContent: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row'
+    },
 });
 
 module.exports = HomeStyle;

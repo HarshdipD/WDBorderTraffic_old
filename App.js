@@ -1,9 +1,8 @@
 import React ,{Component}from 'react';
-import {FlatList, Button, StyleSheet, Text, View, Linking, TouchableOpacity, ImageBackground } from 'react-native';
-import { createStackNavigator, createAppContainer, withOrientation ,createBottomTabNavigator,createMaterialTopTabNavigator ,TabBarBottom } from "react-navigation";
-import { ThemeProvider, Header } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
+import {FlatList, StyleSheet, Text, View, TouchableOpacity, ImageBackground } from 'react-native';
+import { createStackNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
 import * as Font from 'expo-font';
+import * as HomeStyle from './styles/HomeStyle.js';
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -28,7 +27,7 @@ class WebData extends Component{
   fetchData = async()=>
   { try{
     
-    const res = await fetch('http://192.168.1.35:3003/user');
+    const res = await fetch('http://10.70.64.132:3003/user');
     const users = await res.json();
     this.setState({data: users});
     console.log(this.state.data);
@@ -111,6 +110,8 @@ class AboutScreen extends React.Component {
     );
   }
 }
+
+
 
 class HomeScreen extends React.Component {
   render() {
@@ -327,41 +328,3 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeStyle = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  CompareContainer: {
-    flex: 2,
-    backgroundColor: 'white',
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    alignContent: 'center',
-  },
-  BridgeContainer: {
-    flex: 3,
-    backgroundColor: '#3094a1',
-  },
-  TunnelContainer: {
-    flex: 3,
-    backgroundColor: '#545454',
-  },
-  AdSupportContainer: {
-    flex: 1,
-    backgroundColor: 'black',
-    color: 'white',
-    },
-  TextHead: {
-    color: 'white',
-    paddingLeft: 10,
-    paddingTop: 15,
-    textTransform: 'uppercase',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  CompareText: {
-    fontSize: 15,
-    textAlign: 'center',
-  },
-});

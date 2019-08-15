@@ -28,7 +28,7 @@ class WebData extends Component{
   fetchData = async()=>
   { try{
     
-    const res = await fetch('http://192.168.1.35:3003/user');
+    const res = await fetch('http://192.168.1.2:3003/user');
     const users = await res.json();
     this.setState({data: users});
     console.log(this.state.data);
@@ -95,11 +95,11 @@ class AboutScreen extends React.Component {
           <View style={styles.DeveloperInfo}>
             <View style={{width: 150, height: 50, alignItems: 'center'}}>
               <Text>Harshdip S. Deogan</Text>
-              <TouchableOpacity onPress={() => Linking.openURL('http://hsdeogan.com')}><Text style={{color: 'blue'}}>hsdeogan.com</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => Linking.openURL('http://hsdeogan.com')}><Text style={{color: 'blue'}}>Hsdeogan.com</Text></TouchableOpacity>
             </View>
             <View style={{width: 150, height: 50, alignItems: 'center'}}>
               <Text>Prakort Lean</Text>
-              <TouchableOpacity onPress={() => Linking.openURL('http://github.com/prakort')}><Text style={{color: 'blue'}}>github</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => Linking.openURL('http://Prakort.com')}><Text style={{color: 'blue'}}>Prakort.com</Text></TouchableOpacity>
             </View>
           </View>
           <View style={{flex: 1, flexDirection: 'row', paddingTop: 50, alignSelf: 'center'}}>

@@ -1,5 +1,7 @@
 node_modules/**/*
-/database/node_modules/
+/database/node_modules
+/database/package.json
+/database/package-lock.json
 .expo/*
 npm-debug.*
 *.jks

@@ -3,6 +3,7 @@ import {FlatList, StyleSheet, Text, View, TouchableOpacity, ImageBackground, Ima
 import { createStackNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
 import * as Font from 'expo-font';
 import * as HomeStyle from './styles/HomeStyle.js';
+import { Divider } from 'react-native-elements';
 
 export default class App extends React.Component {
 	componentDidMount() {
@@ -27,7 +28,7 @@ class WebData extends Component{
   fetchData = async()=>
   { try{
     
-    const res = await fetch('http://192.168.1.2:3003/bridge');
+    const res = await fetch('http://10.70.64.132:3003/bridge');
     const users = await res.json();
     this.setState({data: users});
     console.log(this.state.data);
@@ -128,24 +129,30 @@ class HomeScreen extends React.Component {
 							<Text style={HomeStyle.TextHead}>Bridge Wait Times</Text>
 
 							<View style={ HomeStyle.tableLay }>
-								<View style={ HomeStyle.tableRow }>
-									<View style={ HomeStyle.tableCol }>
-										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
+								<View style={ HomeStyle.tableCol }>							
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
 										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
 									</View>
-										<View style={ HomeStyle.tableCol }>
-											<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										</View>
-									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
+										<Text>live data</Text>
 									</View>
+								</View>
+
+								<View style={HomeStyle.tableCol}>
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
+									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
+									<View style={ HomeStyle.tableRow }>
+										<Text>live data</Text>
+									</View>
+								</View>
 							</View>
-								
 						</View>
 					</ImageBackground>
 				</View>
@@ -155,24 +162,31 @@ class HomeScreen extends React.Component {
 							<Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
 
 							<View style={ HomeStyle.tableLay }>
-								<View style={ HomeStyle.tableRow }>
-									<View style={ HomeStyle.tableCol }>
-										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
+								<View style={ HomeStyle.tableCol }>							
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
 										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
 									</View>
-										<View style={ HomeStyle.tableCol }>
-											<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										</View>
-									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
+										<Text>live data</Text>
 									</View>
 								</View>
-								
+
+								<View style={HomeStyle.tableCol}>
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
+									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
+									<View style={ HomeStyle.tableRow }>
+										<Text>live data</Text>
+									</View>
+								</View>
+							</View>
+
 						</View>
 					</ImageBackground>
 				</View>
@@ -205,22 +219,29 @@ class CommercialVehicleScreen extends React.Component {
 							<Text style={HomeStyle.TextHead}>Bridge Wait Times</Text>
 
 							<View style={ HomeStyle.tableLay }>
-								<View style={ HomeStyle.tableRow }>
-									<View style={ HomeStyle.tableCol }>
-										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
+								<View style={ HomeStyle.tableCol }>							
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
 										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
 									</View>
-										<View style={ HomeStyle.tableCol }>
-											<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										</View>
-									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
+										<Text>live data</Text>
 									</View>
+								</View>
+
+								<View style={HomeStyle.tableCol}>
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
+									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
+									<View style={ HomeStyle.tableRow }>
+										<Text>live data</Text>
+									</View>
+								</View>
 							</View>
 								
 						</View>
@@ -232,23 +253,30 @@ class CommercialVehicleScreen extends React.Component {
 							<Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
 
 							<View style={ HomeStyle.tableLay }>
-								<View style={ HomeStyle.tableRow }>
-									<View style={ HomeStyle.tableCol }>
-										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
+								<View style={ HomeStyle.tableCol }>							
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
 										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
 									</View>
-										<View style={ HomeStyle.tableCol }>
-											<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										</View>
-									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
+										<Text>live data</Text>
 									</View>
 								</View>
+
+								<View style={HomeStyle.tableCol}>
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
+									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
+									<View style={ HomeStyle.tableRow }>
+										<Text>live data</Text>
+									</View>
+								</View>
+							</View>
 								
 						</View>
 					</ImageBackground>
@@ -283,22 +311,29 @@ class NexusScreen extends React.Component {
 							<Text style={HomeStyle.TextHead}>Bridge Wait Times</Text>
 
 							<View style={ HomeStyle.tableLay }>
-								<View style={ HomeStyle.tableRow }>
-									<View style={ HomeStyle.tableCol }>
-										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
+								<View style={ HomeStyle.tableCol }>							
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
 										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
 									</View>
-										<View style={ HomeStyle.tableCol }>
-											<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										</View>
-									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
+										<Text>live data</Text>
 									</View>
+								</View>
+
+								<View style={HomeStyle.tableCol}>
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
+									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
+									<View style={ HomeStyle.tableRow }>
+										<Text>live data</Text>
+									</View>
+								</View>
 							</View>
 								
 						</View>
@@ -310,23 +345,30 @@ class NexusScreen extends React.Component {
 							<Text style={HomeStyle.TextHead}>Tunnel Wait Times</Text>
 
 							<View style={ HomeStyle.tableLay }>
-								<View style={ HomeStyle.tableRow }>
-									<View style={ HomeStyle.tableCol }>
-										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
+								<View style={ HomeStyle.tableCol }>							
+									<View style={ HomeStyle.tableRow }>
+										<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+										<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
 										<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
 									</View>
-										<View style={ HomeStyle.tableCol }>
-											<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image>
-											<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
-										</View>
-									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
-										<View style={ HomeStyle.tableCol }><Text> live data </Text></View>
+										<Text>live data</Text>
 									</View>
 								</View>
+
+								<View style={HomeStyle.tableCol}>
+									<View style={ HomeStyle.tableRow }>
+									<Image source={require('./images/canada.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+									<Image source={require('./images/arrow.png')} style={{width: 20, height: 20}}></Image><Text>{' '}</Text>
+									<Image source={require('./images/usa.png')} style={{width: 20, height: 20}}></Image>
+									</View>
+									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
+									<View style={ HomeStyle.tableRow }>
+										<Text>live data</Text>
+									</View>
+								</View>
+							</View>
 								
 						</View>
 					</ImageBackground>

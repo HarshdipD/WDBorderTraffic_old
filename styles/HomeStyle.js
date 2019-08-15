@@ -39,26 +39,32 @@ const HomeStyle = StyleSheet.create({
     },
     tableLay: {
       flex: 1,
-      flexDirection: 'column',
-      marginHorizontal: 60,
+      flexDirection: 'row',
       marginVertical: 50,
       alignContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#fff',
-      opacity: 0.8, 
+      alignItems: 'center', 
     },
     tableRow: {
       flex: 1,
       alignSelf: 'stretch',
       flexDirection: 'row',
+      alignContent: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 10,
     },
     tableCol: {
       flex: 1,
       alignSelf: 'stretch',
-      alignContent: 'center',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'row'
+      flexDirection: 'column',
+      backgroundColor: '#fff',
+      opacity: 0.9,
+      marginHorizontal: 50,
+      borderWidth: 1,
+      borderRadius: 10,
+      shadowOffset: {height: 5, width: 10},
+      shadowColor: 'red',
+      
     },
 });
 

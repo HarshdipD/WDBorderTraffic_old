@@ -2,6 +2,10 @@
 const express = require('express');
 const request = require('request');
 const bodyParser = require('body-parser');
+const _ = require('lodash');
+const nightmare = require('nightmare');
+
+const Nightmare = nightmare();
 const app = express();
 app.use(bodyParser.json({type:'application/json'}));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -18,14 +22,10 @@ var server = app.listen(3003, function(){
   
   });
 
-/*
-
-Webscraping start here 
-
-*/
-
+// fetch Bridge website
 const url = 'https://www.ezbordercrossing.com/list-of-border-crossings/michigan/ambassador-bridge/current-traffic/';
-
+// intialize jsonfile variable
+var jsonData;
 rp(url)
     .then(function(html){
         const info = [];
@@ -35,7 +35,7 @@ rp(url)
         });
 
         // print out the array
-        console.log(info);
+        //console.log(info);
         jsonData= getJson(info);
        
     })
@@ -44,12 +44,40 @@ rp(url)
     });
 
 
+// fetch data from Tunnel webpae
 
 
-// intialize jsonfile variable
-var jsonData;
+// intial an empty array
+var TunnelData=[];
+
+// fetch data
+Nightmare
+  .goto('https://dwtunnel.com/')
+  .evaluate(()=>{
+    
+    // using querySelectorAll to get content in "td"
+    return Array.from(document.querySelectorAll('td')).map(element => element.innerText);
+    } )
+  .then(data=>{
+    // remove nextline and empty element in array using _ loadash
+    _.pull(data,'\n');
+    _.pull(data,'');
+
+    
+    // call function to get Json format 
+    TunnelData = tunnelJsonFormat(data);
+    //console.log(TunnelData);
+})
+
+
+
+app.get('/tunnel',function(req,res){
+    res.send(TunnelData);
+})
+
+
 // send it to localhost:3003/user 
-app.get('/user', function(req,res){
+app.get('/bridge', function(req,res){
 
     res.send(jsonData);
 })
@@ -57,6 +85,11 @@ app.get('/user', function(req,res){
 
 
 
+
+
+
+
+/**************** Additional Functions ***************/
 
 // function getJson ---> take the array of the data from the web , convert to json object
 function getJson(data){
@@ -67,36 +100,43 @@ function getJson(data){
 
     for ( var i =0 ; i< data.length ; i++)
     {
-        console.log('INDEX: '+i+" Start***"+data[i]+' ***END\n');
-        if(i%3==0){
-            // get lane name
-            var gate={
-                "lane": "",
-                "details": "",
-
-            };
-            gate.lane= data[i];
-        }
-        else if(i>0 && (i-1)%3==0){
-
-            // get details to more details by calling the the function 
-            var details =  detailsString(data[i]);
-            gate.details = details;
-        }else if(i>0 && (i+1)%3==0)
+        var temp =data[i];
+        //console.log(temp);
+        if(temp!="FAST"&& temp!="Ready Lane")
         {
-           
-            // get enter canada status
-            var eCanada= data[i].replace(/[\n\r]/g,'');
-            //console.log(eCanada+'enter canada');
-           // add into object
+            if((i%3==0)){
+                // get lane name
+                var gate={
+                    "lane": "",
+                    "details": "",
 
-            gate.enterCanada=eCanada;
-            // push to array to start a new object
-            Gates.push(gate);
+                };
+                gate.lane= data[i];
+            }
+            else if(i>0 && (i-1)%3==0){
+
+                // get details to more details by calling the the function 
+                var details =  detailsString(data[i]);
+                gate.details = details;
+            }else if(i>0 && (i+1)%3==0)
+            {
+            
+                // get enter canada status
+                var eCanada= data[i].replace(/[\n\r]/g,'');
+                //console.log(eCanada+'enter canada');
+            // add into object
+
+                gate.enterCanada=eCanada;
+                // push to array to start a new object
+                Gates.push(gate);
+            }
+        }else{
+            i+=2;
         }
-       
-       
     }
+       
+       
+    
     
    // console.log(Gates);
     
@@ -129,7 +169,7 @@ function detailsString(details){
         // get all digit in the string
         var number = temp.match(/[0-9]+/g);
         // find time format am or pm
-        var time_format = (temp.match('am'))? "am":"pm";
+        var time_format = (temp.includes('am'))? "am":"pm";
         // check if there is delay 
         var delay =(temp.match(/no delay/g))? true:false;
 
@@ -157,70 +197,82 @@ function detailsString(details){
             };  
     
 
-        }/*
-        console.log(delay);
-        console.log(time_format);
-        console.log(number);*/
+        }
 
 
     }
 }
 
+
+// function turn content to Json format
+function tunnelJsonFormat(data){
+    
+    // initial 2 empty arrays
+    var CAUS  =[];
+    var USCA     =[];
+    var mid = data.length/2;
+ 
+     // store each element into the new array
+     for ( var i = 0 ; i < mid;i++)
+     {
+         var temp1 = data[i];
+         var temp2 = data[mid+i]
+         CAUS[i]=temp1;
+         USCA[i]=temp2;
+ 
+     }
+ 
+     
+     // our temp Json array
+       var dataJson = [];
+     // our Json objets
+       var ca ={};
+       var us = {};
+ 
+     // check is less or greater than time
+       var lgCA = ((CAUS[0].includes('<'))?'less':'greater');
+       
+     // remove < or > store all value in Object
+       var time1 = removeLG(lgCA,CAUS[0]);
+       ca.direction ="CAUS";
+       ca.compare =lgCA;
+       ca.time = time1;
+       ca.car = CAUS[1];
+       ca.truck = CAUS[2];
+       ca.NEXUS = CAUS[3];
+     
+     // repeat process for US to CA
+       var lgUS = ((USCA[0].includes('<'))?'less':'greater');
+ 
+       var time2 = removeLG(lgUS,USCA[0]);
+       us.direction = "USCA";
+       us.compare = lgUS;
+       us.time =time2;
+       us.car = USCA[1];
+       us.truck = USCA[2];
+       us.NEXUS = USCA[3];
+     
+     // push them into array
+     dataJson.push(ca);
+     dataJson.push(us);
+     
+     // return result
+     return dataJson;
+ 
+ }
+ // remove < or > depend on sign
+ function removeLG(sign,line){
+     if(sign=='less')
+     {
+         return line.replace(/[<A-Z\s]/g,'');
+     }
+     return line.replace(/[>A-Z\s]/g,'');
+ }
 /*
+// 
 
-The model that we try to get
-function makeJson(data){
-    return [
-        {
-            "lane" : "Personal Vehicles",
-            "details" : {
-                "open" : "Open",
-                "time" : "9:00 pm",
-                "delay": "true",
-                "open_lane" : 3
-            },
-            "Enter-Canada": "15mn"
-        },
-        {
-            "lane" : "NEXUS",
-            "details" : {
-                "open" : "Closed",
-                "time" : "",
-                "delay": "",
-                "open_lane" : ""
-            },
-            "Enter-Canda": "15mn"
-        },
-        {
-            "lane" : "Personal Vehicles",
-            "details" : {
-                "open" : true,
-                "time" : "9:00 pm",
-                "delay": true,
-                "open_lane" : 3
-            },
-            "Enter-Canda": "15mn"
-        },
-        {
-            "lane" : "Personal Vehicles",
-            "details" : {
-                "open" : true,
-                "time" : "9:00 pm",
-                "delay": true,
-                "open_lane" : 3
-            },
-            "Enter-Canda": "15mn"
-        },
-        {
-            "lane" : "Personal Vehicles",
-            "details" : {
-                "open" : true,
-                "time" : "9:00 pm",
-                "delay": true,
-                "open_lane" : 3
-            },
-            "Enter-Canda": "15mn"
-        }
 
-    ]
-}*/
+
+
+
+*/

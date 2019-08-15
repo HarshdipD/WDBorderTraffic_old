@@ -1,0 +1,13 @@
+cheerio
+body-parser
+request-promise
+express
+lodash
+electron
+nightmare
+
+to prevent error "--unsafe-perm=true" must be added 
+
+Example:
+
+npm i cheerio --unsafe-perm=true

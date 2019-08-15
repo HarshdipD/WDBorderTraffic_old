@@ -25,7 +25,7 @@ var server = app.listen(3003, function(){
 // fetch Bridge website
 const url = 'https://www.ezbordercrossing.com/list-of-border-crossings/michigan/ambassador-bridge/current-traffic/';
 // intialize jsonfile variable
-var jsonData;
+var BridgeData;
 rp(url)
     .then(function(html){
         const info = [];
@@ -36,7 +36,7 @@ rp(url)
 
         // print out the array
         //console.log(info);
-        jsonData= getJson(info);
+        BridgeData= getJson(info);
        
     })
     .catch(function(err){
@@ -79,11 +79,57 @@ app.get('/tunnel',function(req,res){
 // send it to localhost:3003/user 
 app.get('/bridge', function(req,res){
 
-    res.send(jsonData);
+    res.send(BridgeData);
 })
 
 
+/******Combined Data *********/
 
+function combinedData(B,T)
+{
+    var final_res ={};
+    /*
+        B_CAR_US_CA: '',
+        B_CAR_CA_US: '',
+        // tunnel car
+        T_CAR_US_CA: '',
+        T_CAR_CA_US: '',
+        // bridge COMERC
+        B_COM_US_CA: '',
+        B_COM_CA_US: '',
+        // tunnel COMERC
+        T_COM_US_CA: '',
+        T_COM_CA_US: '',
+        // bridge NEXUS
+        B_NEXUS_US_CA: '',
+        B_NEXUS_CA_US: '',
+        // tunel NEXUS
+        T_NEXUS_US_CA: '',
+        T_NEXUS_CA_US: '',
+
+        */
+    if(B!=null && T!=null){
+
+        // bridge part
+        final_res.B_CAR_CA_US= B[0].details.delay+'/'+B[0].details.open_lane;
+
+        final_res.B_CAR_US_CA= B[0].enterCanada;
+
+        final_res.B_COM_CA_US= B[2].details.delay+'/'+B[2].details.open_lane;
+
+        final_res.B_CAR_US_CA= B[2].enterCanada;
+
+        final_res.B_NEXUS_US_CA= B[1].enterCanada;
+
+        final_res.B_NEXUS_CA_US= B[1].details.delay+'/'+B[1].details.open_lane;
+
+        // tunnel part
+
+        final_res.T_CAR_US_CA = T[1].time+'/'+T[1].car;
+        
+
+    }
+}
 
 
 

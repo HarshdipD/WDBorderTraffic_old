@@ -37,6 +37,7 @@ rp(url)
         // print out the array
         //console.log(info);
         BridgeData= getJson(info);
+        console.log(BridgeData);
        
     })
     .catch(function(err){
@@ -89,7 +90,15 @@ app.get('/bridge', function(req,res){
 })
 
 
+/*  
+
+At Midnight EDT
+no delay
+2 lane(s) open
+
+
 /******Combined Data *********/
+
 
 var fs = function combinedData(B,T)
 {   var arr=[]
@@ -227,7 +236,7 @@ function detailsString(details){
         //console.log(temp +'\tlane closed');
         return {
     
-                "Status" : "Closed",
+                "status" : "Closed",
                 "time" : "",
                 "delay": "",
                 "open_lane" : ''

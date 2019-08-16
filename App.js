@@ -16,7 +16,6 @@ export default class App extends React.Component {
 	}
 }
 
-var key=[];
 class WebData extends Component{
   constructor(props){
     super(props);
@@ -31,14 +30,13 @@ class WebData extends Component{
   fetchData = async()=>
   { try{
     
-    const res = await fetch('http://10.242.2.249:3003/bridge');
+    const res = await fetch('http://192.168.1.35:3003/bridge');
     const users = await res.json();
-	this.setState({data: users});
-
 	var a = this.state.key;
-	var result = users[0].a;
-	console.log(users);
-	console.log(a);
+	var result = users[0][a];
+	this.setState({data: users,time:result});
+	console.log(result +'hello');
+	console.log(a+'what is a');
 
 	
   }
@@ -52,20 +50,20 @@ class WebData extends Component{
 
 	render(){
 		return(
-			<View style={styles.AboutContainer}>
+		
 				<FlatList
 				data={this.state.data}
 				value={this.state.data}
 				keyExtractor={(item,index)=> index.toString()}
 				renderItem={({item})=>
 				<View>
-					<Text style={{fontFamily: 'open-sans'}}>{item.value}
+					<Text style={{color:'red'}}>{this.state.time}
 					</Text>
 					</View>
 				}>
 
 			</FlatList>
-			</View>
+
 		)
 	}
 }
@@ -143,7 +141,7 @@ class HomeScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<WebData value='B_CAR_CA_US'></WebData>
+										<WebData value='B_CAR_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -155,7 +153,9 @@ class HomeScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+										
+											<WebData value='B_CAR_CA_US'></WebData>
+					
 									</View>
 								</View>
 							</View>
@@ -176,7 +176,7 @@ class HomeScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+										<WebData value='T_CAR_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -188,7 +188,7 @@ class HomeScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+									<WebData value='T_CAR_CA_US'></WebData>
 									</View>
 								</View>
 							</View>
@@ -209,9 +209,7 @@ class HomeScreen extends React.Component {
 class CommercialVehicleScreen extends React.Component {
 	static navigationOptions =({navigation})=>({
 		headerTitle: 'About',
-		headerRight: <TouchableOpacity onPress={() => navigation.navigate('Data')}>
-			<Text style={{color: 'white', paddingRight: 20}}>Data</Text>
-			</TouchableOpacity>
+	
 	});
 	render() {
 		return(
@@ -233,7 +231,7 @@ class CommercialVehicleScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+										<WebData value='B_COM_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -245,7 +243,7 @@ class CommercialVehicleScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+									<WebData value='B_COM_CA_US'></WebData>
 									</View>
 								</View>
 							</View>
@@ -267,7 +265,7 @@ class CommercialVehicleScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+									<WebData value='T_COM_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -279,7 +277,7 @@ class CommercialVehicleScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+									<WebData value='T_COM_CA_US'></WebData>
 									</View>
 								</View>
 							</View>
@@ -325,7 +323,7 @@ class NexusScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+										<WebData value='B_NEXUS_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -337,7 +335,7 @@ class NexusScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+									<WebData value='B_NEXUS_CA_US'></WebData>
 									</View>
 								</View>
 							</View>
@@ -359,7 +357,7 @@ class NexusScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+									<WebData value='T_NEXUS_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -371,7 +369,7 @@ class NexusScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+									<WebData value='T_NEXUS_CA_US'></WebData>
 									</View>
 								</View>
 							</View>

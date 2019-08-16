@@ -66,27 +66,33 @@ Nightmare
     
     // call function to get Json format 
     TunnelData = tunnelJsonFormat(data);
-    //console.log(TunnelData);
+    console.log(TunnelData);
 })
 
 
 
 app.get('/tunnel',function(req,res){
     res.send(TunnelData);
-})
+    
+});
 
 
 // send it to localhost:3003/user 
 app.get('/bridge', function(req,res){
-
-    res.send(BridgeData);
+    
+    function sendTo(){
+        setTimeout(
+        res.send(fs(BridgeData,TunnelData)),
+        2000);
+        }
+    sendTo();
 })
 
 
 /******Combined Data *********/
 
-function combinedData(B,T)
-{
+var fs = function combinedData(B,T)
+{   var arr=[]
     var final_res ={};
     /*
         B_CAR_US_CA: '',
@@ -111,24 +117,42 @@ function combinedData(B,T)
     if(B!=null && T!=null){
 
         // bridge part
-        final_res.B_CAR_CA_US= B[0].details.delay+'/'+B[0].details.open_lane;
+        final_res.B_CAR_CA_US= B[0].details.delay+'/'+B[0].details.open_lane+ ' lane(s)';
 
         final_res.B_CAR_US_CA= B[0].enterCanada;
 
-        final_res.B_COM_CA_US= B[2].details.delay+'/'+B[2].details.open_lane;
+        final_res.B_COM_CA_US= B[2].details.delay+'/'+B[2].details.open_lane+ ' lane(s)';
 
-        final_res.B_CAR_US_CA= B[2].enterCanada;
+        final_res.B_COM_US_CA= (B[2].enterCanada=='')?"No delay":B[2].enterCanada;
 
-        final_res.B_NEXUS_US_CA= B[1].enterCanada;
+        final_res.B_NEXUS_US_CA= (B[1].enterCanada=='')?"No delay":B[2].enterCanada;
 
-        final_res.B_NEXUS_CA_US= B[1].details.delay+'/'+B[1].details.open_lane;
+        final_res.B_NEXUS_CA_US= B[1].details.delay+'/'+B[1].details.open_lane+ ' lane(s)';
 
         // tunnel part
 
-        final_res.T_CAR_US_CA = T[1].time+'/'+T[1].car;
+        final_res.T_CAR_US_CA = T[1].time+' mn/'+T[1].car+ ' lane(s)';
+        final_res.T_CAR_CA_US = T[0].time+' mn/'+T[0].car+ ' lane(s)';
+
+        final_res.T_COM_US_CA = T[1].time+' mn/'+T[1].truck+' lane(s)';
+        final_res.T_COM_CA_US = T[0].time+' mn/'+T[0].truck+' lane(s)';
+
+        final_res.T_NEXUS_US_CA = T[1].time+' mn/'+T[1].NEXUS+' lane(s)';
+        final_res.T_NEXUS_CA_US = T[0].time+' mn/'+T[0].NEXUS+' lane(s)';
+
+        final_res.tunnel_CAUS = T[0].time;
+        final_res.tunnel_USCA = T[1].time;
         
+        arr.push(final_res);
+        return arr;
 
     }
+    else{
+        // if data is not ready wait 2 sec
+        setTimeout(fs(B,T),2000);
+    }
+    return;
+   
 }
 
 
@@ -237,7 +261,7 @@ function detailsString(details){
             
                     "status" : "Open",
                     "time" : number[0]+':'+number[1]+time_format,
-                    "delay": "No Delay",
+                    "delay": "No delay",
                     "open_lane" : number[2],
             
             };  

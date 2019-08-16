@@ -16,22 +16,31 @@ export default class App extends React.Component {
 	}
 }
 
+var key=[];
 class WebData extends Component{
   constructor(props){
     super(props);
       this.state={
         
-        data: []
+		data: [],
+		key: this.props.value,
+		time: '',
       
     }
   }
   fetchData = async()=>
   { try{
     
-    const res = await fetch('http://10.70.64.132:3003/bridge');
+    const res = await fetch('http://10.242.2.249:3003/bridge');
     const users = await res.json();
-    this.setState({data: users});
-    console.log(this.state.data);
+	this.setState({data: users});
+
+	var a = this.state.key;
+	var result = users[0].a;
+	console.log(users);
+	console.log(a);
+
+	
   }
   catch(error){
     console.error(error);
@@ -44,19 +53,16 @@ class WebData extends Component{
 	render(){
 		return(
 			<View style={styles.AboutContainer}>
-				<Text style={{fontFamily: 'open-sans'}}>Welcome the information</Text>
 				<FlatList
 				data={this.state.data}
+				value={this.state.data}
 				keyExtractor={(item,index)=> index.toString()}
 				renderItem={({item})=>
 				<View>
-					<Text>{'\n\n'+item.lane}</Text>
-				<Text>{ item.details.Status}</Text>
-				<Text>{ item.details.time}</Text>
-				<Text>{ item.details.delay}</Text>
-				<Text>{ item.enterCanada}</Text>
+					<Text style={{fontFamily: 'open-sans'}}>{item.value}
+					</Text>
 					</View>
-			}>
+				}>
 
 			</FlatList>
 			</View>
@@ -127,7 +133,7 @@ class HomeScreen extends React.Component {
 					<ImageBackground source={require('./images/bridge.jpg')} style={{width: '100%', height: '100%'}}>
 						<View style={{backgroundColor: 'rgba(45, 166, 158, 0.6)', height: '100%', width: '100%'}}>
 							<Text style={HomeStyle.TextHead}>Bridge Wait Times</Text>
-
+						
 							<View style={ HomeStyle.tableLay }>
 								<View style={ HomeStyle.tableCol }>							
 									<View style={ HomeStyle.tableRow }>
@@ -137,7 +143,7 @@ class HomeScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<Text>live data</Text>
+										<WebData value='B_CAR_CA_US'></WebData>
 									</View>
 								</View>
 

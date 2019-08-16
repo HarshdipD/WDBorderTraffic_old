@@ -90,7 +90,15 @@ app.get('/bridge', function(req,res){
 })
 
 
+/*  
+
+At Midnight EDT
+no delay
+2 lane(s) open
+
+
 /******Combined Data *********/
+
 
 var fs = function combinedData(B,T)
 {   var arr=[]

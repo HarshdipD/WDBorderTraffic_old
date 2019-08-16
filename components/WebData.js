@@ -15,7 +15,7 @@ class WebData extends Component{
     fetchData = async()=>
     { try{
       
-      const res = await fetch('http://192.168.1.35:3003/bridge');
+      const res = await fetch('http://10.243.13.82:3003/bridge');
       const users = await res.json();
       var a = this.state.key;
       var result = users[0][a];

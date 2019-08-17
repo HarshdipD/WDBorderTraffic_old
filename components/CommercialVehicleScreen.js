@@ -16,8 +16,12 @@ class CommercialVehicleScreen extends React.Component {
 		return(
 			<View style={HomeStyle.container}>
 				<View style={HomeStyle.CompareContainer}>
-					<Text style={HomeStyle.CompareText}>Tunnel seems faster than bridge {'\n'} by 10 minutes</Text>
+				<Text>CA to US</Text>
+					<WebData value='COMCAUS'></WebData>
+					<Text>US to CA</Text>
+					<WebData value='COMUSCA'></WebData>
 				</View>
+			
 				<View style={HomeStyle.BridgeContainer}>
 					<ImageBackground source={require('../images/bridge.jpg')} style={{width: '100%', height: '100%'}}>
 						<View style={{backgroundColor: 'rgba(45, 166, 158, 0.6)', height: '100%', width: '100%'}}>

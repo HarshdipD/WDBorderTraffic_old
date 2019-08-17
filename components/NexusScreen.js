@@ -19,7 +19,9 @@ class NexusScreen extends React.Component {
 		return(
 <View style={HomeStyle.container}>
 				<View style={HomeStyle.CompareContainer}>
-					<Text style={HomeStyle.CompareText}>Tunnel seems faster than bridge {'\n'} by 10 minutes</Text>
+				<Text>CA to US</Text>
+					<WebData value='NexusCAUS'></WebData>
+			
 				</View>
 				<View style={HomeStyle.BridgeContainer}>
 					<ImageBackground source={require('../images/bridge.jpg')} style={{width: '100%', height: '100%'}}>

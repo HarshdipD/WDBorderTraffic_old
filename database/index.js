@@ -50,7 +50,6 @@ rp(url)
 
 // intial an empty array
 var TunnelData=[];
-
 // fetch data
 Nightmare
   .goto('https://dwtunnel.com/')
@@ -82,8 +81,10 @@ app.get('/tunnel',function(req,res){
 app.get('/bridge', function(req,res){
     
     function sendTo(){
-        setTimeout(
-        res.send(fs(BridgeData,TunnelData)),
+        setTimeout(function(){
+            res.send(fs(BridgeData,TunnelData));
+        }
+    ,
         2000);
         }
     sendTo();
@@ -286,6 +287,8 @@ function detailsString(details){
 // function turn content to Json format
 function tunnelJsonFormat(data){
     
+
+    if(data!=null){
     // initial 2 empty arrays
     var CAUS  =[];
     var USCA     =[];
@@ -321,6 +324,8 @@ function tunnelJsonFormat(data){
        ca.NEXUS = CAUS[3];
      
      // repeat process for US to CA
+        console.log(USCA);
+        console.log(USCA[0]);
        var lgUS = ((USCA[0].includes('<'))?'less':'greater');
  
        var time2 = removeLG(lgUS,USCA[0]);
@@ -334,9 +339,12 @@ function tunnelJsonFormat(data){
      // push them into array
      dataJson.push(ca);
      dataJson.push(us);
-     
+   
      // return result
      return dataJson;
+    }
+    dataJson.push("Empty");
+    return dataJson;
  
  }
  // remove < or > depend on sign

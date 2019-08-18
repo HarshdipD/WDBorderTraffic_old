@@ -156,6 +156,7 @@ no delay
         */
 
         // bridge part
+        final_res.B_time = B[0].details.time;
         final_res.B_CAR_CA_US= B[0].details.delay+' mn/'+B[0].details.open_lane;
 
         final_res.B_CAR_US_CA= B[0].enterCanada;

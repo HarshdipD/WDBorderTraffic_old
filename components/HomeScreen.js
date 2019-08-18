@@ -14,6 +14,7 @@ class HomeScreen extends React.Component {
 			<View style={HomeStyle.container}>
 				<View style={HomeStyle.CompareContainer}>
 				<Text>CA to US</Text>
+				<WebData value='B_time'></WebData>
 					<WebData value='CarCAUS'></WebData>
 					<Text>US to CA</Text>
 					<WebData value='CarUSCA'></WebData>

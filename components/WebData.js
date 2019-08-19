@@ -15,13 +15,12 @@ class WebData extends Component{
     fetchData = async()=>
     { try{
       
-      const res = await fetch('http://192.168.1.35:3003/bridge');
+      const res = await fetch('http://10.0.9.50:3003/ready');
       const users = await res.json();
       var a = this.state.key;
       var result = users[0][a];
       this.setState({data: users,time:result});
-      console.log(result +'hello');
-      console.log(a+'what is a');
+      console.log(users);
   
       
     }

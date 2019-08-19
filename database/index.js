@@ -182,6 +182,7 @@ app.get('/ready', function(req,res){
         final_res.T_NEXUS_CA_US = '---';
         final_res.tunnel_CAUS = '---';
         final_res.tunnel_USCA = '---';
+        final_res.tunnel_time='---';
 
         final_res.CAcarOnlyNum='---';
         final_res.CAtruckOnlyNum='---';
@@ -204,6 +205,8 @@ app.get('/ready', function(req,res){
         final_res.CAcarOnlyNum=T[0].carOnlyNum;
         final_res.CAtruckOnlyNum=T[0].truckOnlyNum;
         final_res.CANEXUSOnlyNum=T[0].NEXUSOnlyNum;
+        var today = new Date();
+        final_res.tunnel_time=today.getHours()+':'+today.getMinutes;
      
         final_res.UScarOnlyNum=T[1].carOnlyNum;
         final_res.UStruckOnlyNum=T[1].truckOnlyNum;

@@ -20,7 +20,6 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 
 // go to localhost 3003 --> if it doesnt work --> change to any number
-
 var server = app.listen(3003, function(){
     var host = server.address().address
     var port = server.address().port
@@ -34,6 +33,7 @@ const url_tunnel ='https://dwtunnel.com/';
 
 
 // fecth bridge data
+var TimeBrige;
 var Bdata;
 var Tdata;
 
@@ -43,7 +43,7 @@ function fetchTunnel(){
         nightmare
         .goto(url_tunnel)
         .cookies.clear()
-        .wait(2000)
+        .wait(1000)
         .evaluate(function(){
             return Array.from(document.querySelectorAll('td')).map(element => element.innerText);
         })
@@ -51,7 +51,8 @@ function fetchTunnel(){
             Bdata=data;
             Tunnel_ready=tunnelJsonFormat(Bdata);
             //console.log(Bdata);
-            fetchBridge();
+            getTime();
+            
         })
     //)
 }
@@ -66,25 +67,57 @@ function fetchBridge(){
         })
         .then(data=>{
             Tdata=data;
-            //console.log(Tdata)
+            console.log(Tdata+'bridge table data')
            
-            //console.log(Tdata);
+           //console.log(Tdata);
           
+            
             Bridge_ready = bridgeFormat(Tdata);
             DATA_READY=combinedData(Bridge_ready,Tunnel_ready);
-            //console.log('hello');
+            console.log(Bridge_ready);
             console.log(DATA_READY);
+
             
             nightmare.proc.disconnect();
             nightmare.proc.kill();
             nightmare.ended=true;
 
-           // DATA_READY=combinedData(Bridge_ready,Tunnel_ready);
+          
+            
+        })
+    )
+}
+function getTime(){
+    Promise.resolve(
+        nightmare
+        .goto(url_bridge)
+        .cookies.clear()
+        .wait(1000)
+        .evaluate(function(){
+            return Array.from(document.querySelectorAll('th')).map(element => element.innerText);
+        })
+        .then(data=>{
+           
+        
+           fetchBridge();
+           var dataTime=findTime(data);
+           TimeBrige=dataTime;
             
         })
     )
 }
 fetchTunnel();
+
+function findTime(data){
+    var t;
+    data.forEach(element => {
+        t=element.match(/[0-9]+:[0-9]+/g);        
+        //console.log(t+'&&&&&&&');
+
+    });
+    return _.toString(t);
+}
+
 
 
 
@@ -96,111 +129,96 @@ app.get('/ready', function(req,res){
 
     res.send(DATA_READY);
 })
-/*
-
-
-var Bridge_ready=[ { lane: 'Personal Vehicles',
-details:
- { time: 'At 2:00 pm EDT', delay: '20', open_lane: '11 lanes' },
-enterCanada: 'No delay' },
-{ lane: 'NEXUS',
-details: { time: 'At 2:00 pm EDT', delay: '20', open_lane: '1 lane' },
-enterCanada: '' },
-{ lane: 'Commercial Vehicles',
-details:
- { time: 'At 2:00 pm EDT', delay: '10', open_lane: '5 lanes' },
-enterCanada: 'No delay' } ];
-var Tunnel_ready=[ { direction: 'CAUS',
-time: '15',
-car: '7 lanes',
-truck: '1 lane',
-NEXUS: '1 lane' },
-{ direction: 'USCA',
-time: '15',
-car: '5 lanes',
-truck: '1 lane',
-NEXUS: '2 lanes' } ];
-
-
-/*  
-
-At Midnight EDT
-no delay
-2 lane(s) open
-
 
 /******Combined Data *********/
 
  function combinedData(B,T)
 {   var arr=[]
     var final_res ={};
-    /*
-        B_CAR_US_CA: '',
-        B_CAR_CA_US: '',
-        // tunnel car
-        T_CAR_US_CA: '',
-        T_CAR_CA_US: '',
-        // bridge COMERC
-        B_COM_US_CA: '',
-        B_COM_CA_US: '',
-        // tunnel COMERC
-        T_COM_US_CA: '',
-        T_COM_CA_US: '',
-        // bridge NEXUS
-        B_NEXUS_US_CA: '',
-        B_NEXUS_CA_US: '',
-        // tunel NEXUS
-        T_NEXUS_US_CA: '',
-        T_NEXUS_CA_US: '',
-
-        */
 
         // bridge part
+
+        if(B==null){
+            final_res.B_time = '---';
+            final_res.B_CAR_CA_US= '---';
+            final_res.B_CAR_US_CA= '---';
+            final_res.B_COM_CA_US= '---';
+            final_res.B_COM_US_CA= '---';
+            final_res.B_NEXUS_US_CA= '---';
+            final_res.B_NEXUS_CA_US= '---';
+            final_res.bridge_CAUS_CAR = '---';
+            final_res.bridge_CAUS_COM = '---';
+            final_res.bridge_CAUS_NEXUS = '---';
+            final_res.bridge_USCA_COM = '---';
+            final_res.bridge_USCA_CAR = '---';
+            final_res.bridge_USCA_NEXUS = '---';
+            final_res.estimatedTime='---';
+        }
+        else
+        {
         final_res.B_time = B[0].details.time;
-        final_res.B_CAR_CA_US= B[0].details.delay+' mn/'+B[0].details.open_lane;
-
+        final_res.B_CAR_CA_US= B[0].details.delay+'/'+B[0].details.open_lane;
         final_res.B_CAR_US_CA= B[0].enterCanada;
-
-        final_res.B_COM_CA_US= B[2].details.delay+' mn/'+B[2].details.open_lane;
-
+        final_res.B_COM_CA_US= B[2].details.delay+'/'+B[2].details.open_lane;
         final_res.B_COM_US_CA= (B[2].enterCanada=='')?"N/A":B[2].enterCanada;
-
         final_res.B_NEXUS_US_CA= (B[1].enterCanada=='')?"N/A":B[2].enterCanada;
-
-        final_res.B_NEXUS_CA_US= B[1].details.delay+' mn/'+B[1].details.open_lane;
-
-        // tunnel part
-
-        final_res.T_CAR_US_CA = T[1].time+' mn/'+T[1].car;
-        final_res.T_CAR_CA_US = T[0].time+' mn/'+T[0].car;
-
-        final_res.T_COM_US_CA = T[1].time+' mn/'+T[1].truck;
-        final_res.T_COM_CA_US = T[0].time+' mn/'+T[0].truck;
-
-        final_res.T_NEXUS_US_CA = T[1].time+' mn/'+T[1].NEXUS;
-        final_res.T_NEXUS_CA_US = T[0].time+' mn/'+T[0].NEXUS;
-
-
-        final_res.tunnel_CAUS = T[0].time;
+        final_res.B_NEXUS_CA_US= B[1].details.delay+'/'+B[1].details.open_lane;
         final_res.bridge_CAUS_CAR = B[0].details.delay;
         final_res.bridge_CAUS_COM = B[2].details.delay;
         final_res.bridge_CAUS_NEXUS = B[1].details.delay;
-        
-        
         final_res.bridge_USCA_COM = B[2].enterCanada;
         final_res.bridge_USCA_CAR = B[0].enterCanada;
         final_res.bridge_USCA_NEXUS = B[1].enterCanada;
-        final_res.tunnel_USCA = T[1].time;
+        final_res.estimatedTime=TimeBrige;
 
-        final_res.CarCAUS = whoIsFaster(T[0].time,B[0].details.delay);
-        final_res.CarUSCA = whoIsFaster(T[1].time,B[0].enterCanada);
-
-        final_res.COMCAUS = whoIsFaster(T[0].time,B[2].details.delay);
-        final_res.COMUSCA = whoIsFaster(T[1].time,B[2].enterCanada);
-
-        final_res.NexusCAUS = whoIsFaster(T[0].time,B[1].details.delay);
-
+        }
         
+        if(T==null){
+        final_res.T_CAR_US_CA = '---';
+        final_res.T_CAR_CA_US = '---';
+        final_res.T_COM_US_CA = '---';
+        final_res.T_COM_CA_US = '---';
+        final_res.T_NEXUS_US_CA = '---';
+        final_res.T_NEXUS_CA_US = '---';
+        final_res.tunnel_CAUS = '---';
+        final_res.tunnel_USCA = '---';
+        final_res.tunnel_time='---';
+
+        final_res.CAcarOnlyNum='---';
+        final_res.CAtruckOnlyNum='---';
+        final_res.CANEXUSOnlyNum='---';
+     
+        final_res.UScarOnlyNum='---';
+        final_res.UStruckOnlyNum='---';
+        final_res.USNEXUSOnlyNum='---';
+            
+        }
+        // tunnel part
+        final_res.T_CAR_US_CA = T[1].time+' mn/'+T[1].car;
+        final_res.T_CAR_CA_US = T[0].time+' mn/'+T[0].car;
+        final_res.T_COM_US_CA = T[1].time+' mn/'+T[1].truck;
+        final_res.T_COM_CA_US = T[0].time+' mn/'+T[0].truck;
+        final_res.T_NEXUS_US_CA = T[1].time+' mn/'+T[1].NEXUS;
+        final_res.T_NEXUS_CA_US = T[0].time+' mn/'+T[0].NEXUS;
+        final_res.tunnel_CAUS = T[0].time;
+        final_res.tunnel_USCA = T[1].time;
+        final_res.CAcarOnlyNum=T[0].carOnlyNum;
+        final_res.CAtruckOnlyNum=T[0].truckOnlyNum;
+        final_res.CANEXUSOnlyNum=T[0].NEXUSOnlyNum;
+        var today = new Date();
+        final_res.tunnel_time=today.getHours()+':'+today.getMinutes;
+     
+        final_res.UScarOnlyNum=T[1].carOnlyNum;
+        final_res.UStruckOnlyNum=T[1].truckOnlyNum;
+        final_res.USNEXUSOnlyNum=T[1].NEXUSOnlyNum;
+        
+        
+        final_res.CarCAUS = whoIsFaster(final_res.CAcarOnlyNum,T[0].time,B[0].details.delay);
+        final_res.CarUSCA = whoIsFaster(final_res.UStruckOnlyNum,T[1].time,B[0].enterCanada);
+        final_res.COMCAUS = whoIsFaster(final_res.CAtruckOnlyNum,T[0].time,B[2].details.delay);
+        final_res.COMUSCA = whoIsFaster( final_res.UStruckOnlyNum,T[1].time,B[2].enterCanada);
+        final_res.NexusCAUS = whoIsFaster(final_res.CANEXUSOnlyNum,T[0].time,B[1].details.delay);
+
         
         
         //console.log(final_res);
@@ -211,35 +229,37 @@ no delay
 
 }
 
-function whoIsFaster(tunnel,bridge){
+function whoIsFaster(tunnelLane,tunnel,bridge){
 
-    if(tunnel=="No delay" && bridge=="No delay")
-    {
-        return 'No wait time for Tunnel and Bridge';
-    }else if (tunnel=="No delay" && bridge!="No delay" || bridge=="Closed")
-    {
-        return 'Tunnel is Faster';
-    }
-    else if (tunnel!="No delay" && bridge=="No delay" || tunnel=="Closed")
-    {
-        return 'Bridge is Faster';
-    }else
-    {
-        var t = _.toInteger(tunnel);
-        var b = _.toInteger(bridge);
-        var ab = Math.abs(t-b);
-        if(t<b)
+    if(tunnelLane!='Closed' && tunnelLane!='0'){
+        if(tunnel=="No delay" && bridge=="No delay")
         {
-            return 'Tunnel is '+ab+' mn Faster than Bridge';
-        }
-        else if (t>b)
+            return 'No wait time for Tunnel and Bridge';
+        }else if (tunnel=="Closed" && bridge!="No delay")
         {
-            return 'Bridge is '+ab+' mn Faster than Tunnel';
+            return 'Bridge is faster';
         }
-        else{
-            return 'Same Wait Time'+ t +' mn';
+        else if(tunnel=='---' || bridge=='---'){
+            return 'Data source is NOT available to analyze';
         }
-    }
+        else
+        {
+            var t = _.toInteger(tunnel);
+            var b = _.toInteger(bridge);
+            var ab = Math.abs(t-b);
+            if(t<b)
+            {
+                return 'Tunnel is '+ab+' mn faster than Bridge';
+            }
+            else if (t>b)
+            {
+                return 'Bridge is '+ab+' mn faster than Tunnel';
+            }
+            else{
+                return 'Same Wait Time'+ t +' mn';
+            }
+    }}
+   return 'This Tunnel Lane is Closed';
 }
 
 
@@ -250,7 +270,8 @@ function whoIsFaster(tunnel,bridge){
 
 // function getJson ---> take the array of the data from the web , convert to json object
 function bridgeFormat(data)
-{;
+{
+
     // global array 
     var Gates = [];
     // initial temp var
@@ -344,7 +365,11 @@ function detailsString(details){
     else
     {
 
+
+
         var delay =(temp[1].match(/no delay/g))? true:false;
+      console.log(temp[1]+'*****'+delay);
+
         var lane = temp[2].match(/[0-9]+/g);
        lane = laneCheck(lane)
         //console.log('before'+temp[2]+'after match'+lane)
@@ -356,7 +381,7 @@ function detailsString(details){
             
             return {
                     "time" : temp[0],
-                    "delay": time,
+                    "delay": time+' mn',
                     "open_lane" : lane,
 
             };
@@ -418,6 +443,9 @@ function tunnelJsonFormat(data){
        ca.car = laneCheck(CAUS[1]);
        ca.truck = laneCheck(CAUS[2]);
        ca.NEXUS = laneCheck(CAUS[3]);
+       ca.carOnlyNum=CAUS[1];
+       ca.truckOnlyNum=CAUS[2];
+       ca.NEXUSOnlyNum=CAUS[3];
      
      // repeat process for US to CA
  
@@ -427,6 +455,9 @@ function tunnelJsonFormat(data){
        us.car = laneCheck(USCA[1]);
        us.truck = laneCheck(USCA[2]);
        us.NEXUS = laneCheck(USCA[3]);
+       us.carOnlyNum=USCA[1];
+       us.truckOnlyNum=USCA[2];
+       us.NEXUSOnlyNum=USCA[3];
      
      // push them into array
      dataJson.push(ca);

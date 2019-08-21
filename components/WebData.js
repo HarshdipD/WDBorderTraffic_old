@@ -15,7 +15,7 @@ class WebData extends Component{
     fetchData = async()=>
     { try{
       
-      const res = await fetch('http://10.0.9.50:3003/ready');
+      const res = await fetch('http://10.70.64.42:3003/ready');
       const users = await res.json();
       var a = this.state.key;
       var result = users[0][a];
@@ -41,7 +41,7 @@ class WebData extends Component{
                   keyExtractor={(item,index)=> index.toString()}
                   renderItem={({item})=>
                   <View>
-                      <Text style={{color:'red'}}>{this.state.time}
+                      <Text style={{textAlign: 'center'}}>{this.state.time}
                       </Text>
                       </View>
                   }>

@@ -16,7 +16,9 @@ class CommercialVehicleScreen extends React.Component {
 		return(
 			<View style={HomeStyle.container}>
 				<View style={HomeStyle.CompareContainer}>
-				<Text>CA to US</Text>
+
+					<WebData value='B_time'></WebData>
+					<Text>CA to US</Text>
 					<WebData value='COMCAUS'></WebData>
 					<Text>US to CA</Text>
 					<WebData value='COMUSCA'></WebData>

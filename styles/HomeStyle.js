@@ -28,19 +28,27 @@ const HomeStyle = StyleSheet.create({
     TextHead: {
       color: 'white',
       paddingLeft: 10,
-      paddingTop: 15,
+      paddingTop: 10,
       textTransform: 'uppercase',
       fontSize: 18,
       fontWeight: 'bold',
+    },
+    TextHeadLink: {
+      color: 'white',
+      textAlign: 'right',
+      fontSize: 12,
+      paddingRight: 20,
+      paddingTop: 10,
     },
     CompareText: {
       fontSize: 15,
       textAlign: 'center',
     },
     tableLay: {
-      flex: 1,
+      flex: 2,
       flexDirection: 'row',
-      marginVertical: 50,
+      marginTop: 20,
+      marginBottom: 40,
       alignContent: 'center',
       alignItems: 'center', 
     },
@@ -59,12 +67,13 @@ const HomeStyle = StyleSheet.create({
       flexDirection: 'column',
       backgroundColor: '#fff',
       opacity: 0.9,
-      marginHorizontal: 50,
+      marginHorizontal: 20,
       borderWidth: 1,
       borderRadius: 10,
-      shadowOffset: {height: 5, width: 10},
-      shadowColor: 'red',
-      
+      shadowOffset: {height: 5, width: 10},      
+    },
+    dataBox:{
+      alignContent: 'center',
     },
 });
 

@@ -1,9 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import * as Font from 'expo-font';
-import * as HomeStyle from '../styles/HomeStyle.js';
-import { Divider } from 'react-native-elements';
-import WebData from './WebData';
+import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native';
 
 
 

@@ -8,7 +8,8 @@ import WebData from './components/WebData.js';
 import HomeScreen from './components/HomeScreen.js';
 import CommercialVehicleScreen from './components/CommercialVehicleScreen.js';
 import NexusScreen from './components/NexusScreen.js';
-import AboutScreen from './components/AboutScreen'
+import AboutScreen from './components/AboutScreen';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default class App extends React.Component {
 	componentDidMount() {
@@ -31,31 +32,50 @@ const AppNavigator = createStackNavigator({
 				screen: HomeScreen,
 				navigationOptions: ({ navigation }) => ({
 					title: 'Personal',
+					tabBarIcon: ({ tintColor }) => (
+						<Icon
+							name="car"
+							size={17}
+							color={tintColor} />
+					),
 				}),
 			},
 			CommercialVehicle: {
 				screen: CommercialVehicleScreen,
 				navigationOptions: ({ navigation }) => ({
 					title: 'Commercial',
+					tabBarIcon: ({ tintColor }) => (
+						<Icon
+							name="truck"
+							size={17}
+							color={tintColor} />
+					),
 				}),
 			},
 			Nexus: {
 				screen: NexusScreen,
 				navigationOptions: ({ navigation }) => ({
 					title: 'NEXUS',
+					tabBarIcon: ({ tintColor }) => (
+						<Icon
+							name="barcode"
+							size={17}
+							color={tintColor} />
+					),
 				}),
 			},
 		},
 		{
 			tabBarOptions: {
 				activeTintColor: '#fff',
-				inactiveTintColor: '#fff',
+				inactiveTintColor: '#e6e6e6',
 				style: {
-					backgroundColor: '#85D4DD',
+					backgroundColor: '#13b0b9',
 				},
 				indicatorStyle: {
 					backgroundColor: '#fff',
-				}
+				},
+				showIcon: true,
 			},
 		}
 		),

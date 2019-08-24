@@ -8,9 +8,9 @@ const HomeStyle = StyleSheet.create({
       flex: 2,
       backgroundColor: 'white',
       textAlign: 'center',
-      justifyContent: 'center',
       alignSelf: 'center',
       alignContent: 'center',
+      paddingTop: 20,
     },
     BridgeContainer: {
       flex: 3,

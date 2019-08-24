@@ -20,7 +20,7 @@ class WebData extends Component{
   
       try{
 
-      const res = await fetch('http://192.168.1.35:3003/ready');
+      const res = await fetch('http://192.168.0.26:3003/ready');
       const users = await res.json();
       var a = this.state.key;
       var result = users[0][a];
@@ -31,7 +31,7 @@ class WebData extends Component{
       
     }
     catch(error){
-      console.error('FAILED do something');
+      console.error('An error occured. Sorry about that, we\'re still learning!');
     }
     }
     componentDidMount(){

@@ -11,7 +11,7 @@ class WebData extends Component{
           data: [],
           key: this.props.value,
           time: '',
-      
+          
         
       }
     }
@@ -42,8 +42,6 @@ class WebData extends Component{
           return(
           
                   <FlatList
-                  data={this.state.data}
-                  value={this.state.data}
                   keyExtractor={(item,index)=> index.toString()}
                   renderItem={({item})=>
                   <View>

@@ -27,7 +27,7 @@ export default class App extends React.Component {
 		LoadingScreen.load(v => this.setState({loaded: true}));
 	}
 	render() {
-		return this.state.loaded?<AppContainer />:<View style={styles.container}><Text>LOADING........</Text></View>;
+		return this.state.loaded?<AppContainer />:<View style={styles.container}><Image source={require('./assets/icon.png')} style={{width: 50, height: 50}}></Image><Text style={{color: '#fff'}}>LOADING...</Text></View>;
 	}
 }
 
@@ -120,7 +120,7 @@ const AppContainer = createAppContainer(AppNavigator);
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#C5F0A4',
+		backgroundColor: '#13b0b9',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},

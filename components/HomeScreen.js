@@ -5,6 +5,7 @@ import * as HomeStyle from '../styles/HomeStyle.js';
 import { Divider } from 'react-native-elements';
 import WebData from './WebData';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import LoadingScreen from './LoadingScreen';
 
 
 
@@ -14,7 +15,7 @@ class HomeScreen extends React.Component {
 		return (
 			<View style={HomeStyle.container}>
 				<View style={HomeStyle.CompareContainer}>
-					<WebData value='B_time'></WebData>
+				<Text>Estimated Time At</Text><WebData value='B_time' ></WebData>
 				<Text>CA to US</Text>
 					<WebData value='CarCAUS'></WebData>
 					<Text>US to CA</Text>

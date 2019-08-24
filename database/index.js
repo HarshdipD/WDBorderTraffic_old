@@ -32,10 +32,63 @@ const url_bridge = 'https://www.ezbordercrossing.com/list-of-border-crossings/mi
 const url_tunnel ='https://dwtunnel.com/';
 
 
+
+/********************************sample data *********************************/
+
+var sample = [ 
+{ 'B_time': 'At 11:00 pm EDT',
+'B_CAR_CA_US': 'No delay/3 lanes',
+'B_CAR_US_CA': 'No delay',
+'B_COM_CA_US': '15 mn/5 lanes',
+'B_COM_US_CA': 'No delay',
+'B_NEXUS_US_CA': 'N/A',
+'B_NEXUS_CA_US': 'Closed/Closed',
+'bridge_CAUS_CAR': 'No delay',
+'bridge_CAUS_COM': '15 mn',
+'bridge_CAUS_NEXUS': 'Closed',
+'bridge_USCA_COM': 'No delay',
+'bridge_USCA_CAR': 'No delay',
+'bridge_USCA_NEXUS': '',
+'estimatedTime': '23:14',
+'T_CAR_US_CA': '15 mn/2 lanes',
+'T_CAR_CA_US': '15 mn/2 lanes',
+'T_COM_US_CA': '15 mn/1 lane',
+'T_COM_CA_US': '15 mn/Closed',
+'T_NEXUS_US_CA': '15 mn/1 lane',
+'T_NEXUS_CA_US': '15 mn/Closed',
+'tunnel_CAUS': '15',
+'tunnel_USCA': '15',
+'CAcarOnlyNum': '2',
+'CAtruckOnlyNum': '0',
+'CANEXUSOnlyNum': '0',
+'tunnel_time': '0:function getMinutes() { [native code] }',
+'UScarOnlyNum': '2',
+'UStruckOnlyNum': '1',
+'USNEXUSOnlyNum': '1',
+'CarCAUS': 'Bridge is 15 mn faster than Tunnel',
+'CarUSCA': 'Bridge is 15 mn faster than Tunnel',
+'COMCAUS': 'This Tunnel Lane is Closed',
+'COMUSCA': 'Bridge is 15 mn faster than Tunnel',
+'NexusCAUS': 'This Tunnel Lane is Closed',
+    'one':{
+    
+        'two': '234',
+        'third': '345',
+        'one':{
+            'one': 'inside123',
+            'two': 'inside234',
+            'third': 'inside345',
+        }
+    }
+}
+];
+
+
 // fecth bridge data
 var TimeBrige;
 var Bdata;
 var Tdata;
+var pendingUpdate =false;
 
 var DATA_READY;
 function fetchTunnel(){
@@ -110,7 +163,13 @@ fetchTunnel();
 
 function findTime(data){
     var t;
+    var pending;
     data.forEach(element => {
+        if(element.includes('Pending Update'))
+           { pending = true;
+            pendingUpdate=pending;
+
+           }
         t=element.match(/[0-9]+:[0-9]+/g);        
         //console.log(t+'&&&&&&&');
 
@@ -138,7 +197,7 @@ app.get('/ready', function(req,res){
 
         // bridge part
 
-        if(B==null){
+        if(B==null || pendingUpdate==true){
             final_res.B_time = '---';
             final_res.B_CAR_CA_US= '---';
             final_res.B_CAR_US_CA= '---';
@@ -156,13 +215,16 @@ app.get('/ready', function(req,res){
         }
         else
         {
-        final_res.B_time = B[0].details.time;
-        final_res.B_CAR_CA_US= B[0].details.delay+'/'+B[0].details.open_lane;
+
+    
+        final_res.B_time = B[0].details.time.replace(/At|EDT/g,'');
+        final_res.B_CAR_CA_US= laneClosed(B[0].details.delay,B[0].details.open_lane);
         final_res.B_CAR_US_CA= B[0].enterCanada;
-        final_res.B_COM_CA_US= B[2].details.delay+'/'+B[2].details.open_lane;
-        final_res.B_COM_US_CA= (B[2].enterCanada=='')?"N/A":B[2].enterCanada;
-        final_res.B_NEXUS_US_CA= (B[1].enterCanada=='')?"N/A":B[2].enterCanada;
-        final_res.B_NEXUS_CA_US= B[1].details.delay+'/'+B[1].details.open_lane;
+        final_res.B_COM_CA_US= laneClosed(B[2].details.delay,B[2].details.open_lane);
+        final_res.B_COM_US_CA= (B[2].enterCanada=='')?"Pending Update":B[2].enterCanada;
+        final_res.B_NEXUS_US_CA= (B[1].enterCanada=='')?"Pending Update":B[2].enterCanada;
+
+        final_res.B_NEXUS_CA_US= laneClosed(B[1].details.delay,B[1].details.open_lane);
         final_res.bridge_CAUS_CAR = B[0].details.delay;
         final_res.bridge_CAUS_COM = B[2].details.delay;
         final_res.bridge_CAUS_NEXUS = B[1].details.delay;
@@ -170,10 +232,9 @@ app.get('/ready', function(req,res){
         final_res.bridge_USCA_CAR = B[0].enterCanada;
         final_res.bridge_USCA_NEXUS = B[1].enterCanada;
         final_res.estimatedTime=TimeBrige;
-
-        }
-        
-        if(T==null){
+     
+    }
+        if(T==null || pendingUpdate==true){
         final_res.T_CAR_US_CA = '---';
         final_res.T_CAR_CA_US = '---';
         final_res.T_COM_US_CA = '---';
@@ -194,19 +255,19 @@ app.get('/ready', function(req,res){
             
         }
         // tunnel part
-        final_res.T_CAR_US_CA = T[1].time+' mn/'+T[1].car;
-        final_res.T_CAR_CA_US = T[0].time+' mn/'+T[0].car;
-        final_res.T_COM_US_CA = T[1].time+' mn/'+T[1].truck;
-        final_res.T_COM_CA_US = T[0].time+' mn/'+T[0].truck;
-        final_res.T_NEXUS_US_CA = T[1].time+' mn/'+T[1].NEXUS;
-        final_res.T_NEXUS_CA_US = T[0].time+' mn/'+T[0].NEXUS;
+        final_res.T_CAR_US_CA = laneClosed(T[1].time,T[1].car);
+        final_res.T_CAR_CA_US = laneClosed(T[0].time,T[0].car);
+        final_res.T_COM_US_CA = laneClosed(T[1].time,T[1].truck);
+        final_res.T_COM_CA_US = laneClosed(T[0].time,T[0].truck);
+        final_res.T_NEXUS_US_CA = laneClosed(T[1].time,T[1].NEXUS);
+        final_res.T_NEXUS_CA_US = laneClosed(T[0].time,T[0].NEXUS);
         final_res.tunnel_CAUS = T[0].time;
         final_res.tunnel_USCA = T[1].time;
         final_res.CAcarOnlyNum=T[0].carOnlyNum;
         final_res.CAtruckOnlyNum=T[0].truckOnlyNum;
         final_res.CANEXUSOnlyNum=T[0].NEXUSOnlyNum;
         var today = new Date();
-        final_res.tunnel_time=today.getHours()+':'+today.getMinutes;
+        final_res.tunnel_time=formatAMPM(new Date);
      
         final_res.UScarOnlyNum=T[1].carOnlyNum;
         final_res.UStruckOnlyNum=T[1].truckOnlyNum;
@@ -230,8 +291,11 @@ app.get('/ready', function(req,res){
 }
 
 function whoIsFaster(tunnelLane,tunnel,bridge){
+    if(pendingUpdate==true){
+        return 'Pending Update';
+    }
+    else if(tunnelLane!='Closed' && tunnelLane!='0'){
 
-    if(tunnelLane!='Closed' && tunnelLane!='0'){
         if(tunnel=="No delay" && bridge=="No delay")
         {
             return 'No wait time for Tunnel and Bridge';
@@ -240,7 +304,7 @@ function whoIsFaster(tunnelLane,tunnel,bridge){
             return 'Bridge is faster';
         }
         else if(tunnel=='---' || bridge=='---'){
-            return 'Data source is NOT available to analyze';
+            return 'Pending Update';
         }
         else
         {
@@ -256,11 +320,13 @@ function whoIsFaster(tunnelLane,tunnel,bridge){
                 return 'Bridge is '+ab+' mn faster than Tunnel';
             }
             else{
-                return 'Same Wait Time'+ t +' mn';
+                return 'Same Wait Time';
             }
     }}
-   return 'This Tunnel Lane is Closed';
+    else if (tunnel=='Closed' || tunnelLane=='0')
+        return 'This tunnel lane is closed';
 }
+
 
 
 
@@ -300,7 +366,7 @@ function bridgeFormat(data)
             {
             
                 // get enter canada status
-                var eCanada= data[i];
+                var eCanada= data[i].replace(/minutes/g,'mn');
     
                 //console.log(eCanada+'enter canada');
                 // add into object
@@ -340,6 +406,7 @@ function detailsString(details){
     
     // change string to lower case
     var temp = details.split('\n');
+   
    //console.log(temp+'split array of delailts => 3 arrays');
     //console.log(temp[0]);
     //console.log(temp[1]);
@@ -374,6 +441,7 @@ function detailsString(details){
        lane = laneCheck(lane)
         //console.log('before'+temp[2]+'after match'+lane)
         // delay
+        
         if(!delay){
             var time = temp[1].replace(/[a-zA-Z\s]/g,'');
           //  console.log(time+'delay time mn');
@@ -381,7 +449,7 @@ function detailsString(details){
             
             return {
                     "time" : temp[0],
-                    "delay": time+' mn',
+                    "delay": time,
                     "open_lane" : lane,
 
             };
@@ -463,7 +531,7 @@ function tunnelJsonFormat(data){
      dataJson.push(ca);
      dataJson.push(us);
    
-    
+    console.log(dataJson);
 
     return dataJson;
  
@@ -486,3 +554,21 @@ function laneCheck(lane){
     }
     return lane+' lanes';
 }
+function laneClosed(time,closed){
+    if (closed =='Closed')
+        return 'Closed';
+    else if ( time =='No delay' && closed!='Closed')
+        return time+'/'+closed;
+    else
+        return time+' mn/'+closed;
+}
+function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }

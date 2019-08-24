@@ -10,15 +10,24 @@ import CommercialVehicleScreen from './components/CommercialVehicleScreen.js';
 import NexusScreen from './components/NexusScreen.js';
 import AboutScreen from './components/AboutScreen';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import LoadingScreen from './components/LoadingScreen.js';
 
 export default class App extends React.Component {
+	state={
+		loaded: false
+	}
+	constructor(){
+		super()
+		
+	}
 	componentDidMount() {
 		Font.loadAsync({
 			'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
 		});
+		LoadingScreen.load(v => this.setState({loaded: true}));
 	}
 	render() {
-		return <AppContainer />;
+		return this.state.loaded?<AppContainer />:<View style={styles.container}><Text>LOADING........</Text></View>;
 	}
 }
 
@@ -108,3 +117,37 @@ const AppNavigator = createStackNavigator({
 
 const AppContainer = createAppContainer(AppNavigator);
 
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#C5F0A4',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	AboutContainer: {
+		paddingTop: 30,
+		flex: 4,
+		backgroundColor: '#fff',
+	},
+	TextAlignCenter: {
+		textAlign: "center",
+	},
+	TextPadding: {
+		paddingLeft: 30,
+		paddingRight: 30,
+	},
+	DeveloperInfo: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		paddingRight: 60,
+		paddingLeft: 60,
+	},
+	head: {
+		fontSize: 20,
+		fontWeight: "bold",
+		textAlign: 'center',
+		paddingLeft: 30,
+		paddingRight: 30,
+	},
+});

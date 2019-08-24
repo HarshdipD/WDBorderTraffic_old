@@ -31,15 +31,15 @@ class AboutScreen extends React.Component {
             <View style={styles.DeveloperInfo}>
               <View style={{width: 150, height: 50, alignItems: 'center'}}>
                 <Text>Harshdip S. Deogan</Text>
-                <TouchableOpacity onPress={() => Linking.openURL('http://hsdeogan.com')}><Text style={{color: 'blue'}}>Hsdeogan.com</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL('http://hsdeogan.com')}><Text style={{color: 'blue'}}>hsdeogan.com</Text></TouchableOpacity>
               </View>
               <View style={{width: 150, height: 50, alignItems: 'center'}}>
                 <Text>Prakort Lean</Text>
-                <TouchableOpacity onPress={() => Linking.openURL('http://Prakort.com')}><Text style={{color: 'blue'}}>Prakort.com</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL('http://Prakort.com')}><Text style={{color: 'blue'}}>prakort.com</Text></TouchableOpacity>
               </View>
             </View>
             <View style={{flex: 1, flexDirection: 'row', paddingTop: 50, alignSelf: 'center'}}>
-                <Text>Rate us on Google Play!</Text>
+                <Text>Please rate this app on Google Play!</Text>
             </View>   
           </View>
         </View>

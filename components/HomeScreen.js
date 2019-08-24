@@ -14,11 +14,11 @@ class HomeScreen extends React.Component {
 		return (
 			<View style={HomeStyle.container}>
 				<View style={HomeStyle.CompareContainer}>
-					<WebData value={'B_time'} ></WebData>
+				<Text>Estimated Time At</Text><WebData value='B_time' ></WebData>
 				<Text>CA to US</Text>
-					<WebData value='B_time'></WebData>
+					<WebData value='CarCAUS'></WebData>
 					<Text>US to CA</Text>
-					<WebData value='B_time'></WebData>
+					<WebData value='CarUSCA'></WebData>
 				</View>
 				<View style={HomeStyle.BridgeContainer}>
 					<ImageBackground source={require('../images/bridge.jpg')} style={{width: '100%', height: '100%'}}>

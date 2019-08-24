@@ -26,7 +26,7 @@ class WebData extends Component{
       var result = users[0][a];
       this.setState({data: users,time:result});
       console.log(users);
-      console.log(a);
+      console.log(result);
   
       
     }
@@ -35,13 +35,15 @@ class WebData extends Component{
     }
     }
     componentDidMount(){
-      setTimeout(()=>{this.fetchData();},4000);
+      this.fetchData();
     }
   
       render(){
           return(
           
                   <FlatList
+                  data={this.state.data}
+                  value={this.state.data}
                   keyExtractor={(item,index)=> index.toString()}
                   renderItem={({item})=>
                   <View>

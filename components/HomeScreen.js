@@ -5,6 +5,7 @@ import * as HomeStyle from '../styles/HomeStyle.js';
 import { Divider } from 'react-native-elements';
 import WebData from './WebData';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import LoadingScreen from './LoadingScreen';
 
 
 

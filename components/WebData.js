@@ -31,7 +31,7 @@ class WebData extends Component{
       
     }
     catch(error){
-      console.error(error);
+      console.error('FAILED do something');
     }
     }
     componentDidMount(){

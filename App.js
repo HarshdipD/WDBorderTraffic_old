@@ -27,7 +27,12 @@ export default class App extends React.Component {
 		LoadingScreen.load(v => this.setState({loaded: true}));
 	}
 	render() {
-		return this.state.loaded?<AppContainer />:<View style={styles.container}><Text>LOADING........</Text></View>;
+		return this.state.loaded?<AppContainer />:<View style={styles.container}>
+		<Image
+		style={{width: 100, height: 100}}
+		source={require('../WDBorderTraffic/assets/icon.png')}/>
+		<Text style={{color: 'white'}}>Loading...</Text>
+		</View>;
 	}
 }
 
@@ -120,7 +125,7 @@ const AppContainer = createAppContainer(AppNavigator);
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#C5F0A4',
+		backgroundColor: '#12A3AA',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},

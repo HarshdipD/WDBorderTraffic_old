@@ -27,7 +27,7 @@ export default class App extends React.Component {
 		LoadingScreen.load(v => this.setState({loaded: true}));
 	}
 	render() {
-		return this.state.loaded?<AppContainer />:<View style={styles.container}><Image source={require('./assets/icon.png')} style={{width: 50, height: 50}}></Image><Text style={{color: '#fff'}}>LOADING...</Text></View>;
+		return this.state.loaded?<AppContainer />:<View style={styles.container}><Image source={require('./assets/icon.png')} style={{width: 100, height: 100}}></Image><Text style={{color: '#fff'}}>LOADING...</Text></View>;
 	}
 }
 

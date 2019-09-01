@@ -5,7 +5,6 @@ import * as HomeStyle from '../styles/HomeStyle.js';
 import { Divider } from 'react-native-elements';
 import WebData from './WebData';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import LoadingScreen from './LoadingScreen';
 
 
 
@@ -19,14 +18,10 @@ class HomeScreen extends React.Component {
 						<Text style={HomeStyle.CompareText}>CA to US</Text>
 						<View style={{flex: 1, flexDirection: 'row'}}>
 							<Text>As of </Text>
-							<WebData value='B_time' ></WebData>
-							<WebData value='CarCAUS'></WebData>
 						</View>
 						<Text style={HomeStyle.CompareText}>US to CA</Text>
 						<View style={{flex: 1, flexDirection: 'row'}}>
 							<Text>As of </Text>
-							<WebData value='estimatedTime' ></WebData>
-							<WebData value='CarUSCA'></WebData>
 						</View>
 					</View>
 				</View>
@@ -55,7 +50,6 @@ class HomeScreen extends React.Component {
 									{/* <Text>Entering Canada</Text> */}
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<WebData value='B_CAR_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -69,7 +63,6 @@ class HomeScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<WebData value='B_CAR_CA_US'></WebData>
 									</View>
 								</View>
 							</View>
@@ -99,7 +92,6 @@ class HomeScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<WebData value='T_CAR_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -113,7 +105,6 @@ class HomeScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-									<WebData value='T_CAR_CA_US'></WebData>
 									</View>
 								</View>
 							</View>

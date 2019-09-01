@@ -20,14 +20,10 @@ class CommercialVehicleScreen extends React.Component {
 						<Text style={HomeStyle.CompareText}>CA to US</Text>
 						<View style={{flex: 1, flexDirection: 'row'}}>
 							<Text>As of </Text>
-							<WebData value='B_time' ></WebData>
-							<WebData value='COMCAUS'></WebData>
 						</View>
 						<Text style={HomeStyle.CompareText}>US to CA</Text>
 						<View style={{flex: 1, flexDirection: 'row'}}>
 							<Text>As of </Text>
-							<WebData value='estimatedTime' ></WebData>
-							<WebData value='COMUSCA'></WebData>
 						</View>
 					</View>
 				</View>
@@ -56,7 +52,6 @@ class CommercialVehicleScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-										<WebData value='B_COM_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -70,7 +65,6 @@ class CommercialVehicleScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-									<WebData value='B_COM_CA_US'></WebData>
 									</View>
 								</View>
 							</View>
@@ -101,7 +95,6 @@ class CommercialVehicleScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-									<WebData value='T_COM_US_CA'></WebData>
 									</View>
 								</View>
 
@@ -115,7 +108,6 @@ class CommercialVehicleScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
-									<WebData value='T_COM_CA_US'></WebData>
 									</View>
 								</View>
 							</View>

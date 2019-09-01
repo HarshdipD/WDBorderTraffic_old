@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {FlatList, StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import {FlatList, StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image, ActivityIndicator, ProgressBarAndroid } from 'react-native';
 import { createStackNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
 import * as Font from 'expo-font';
 import * as HomeStyle from './styles/HomeStyle.js';
@@ -27,7 +27,7 @@ export default class App extends React.Component {
 		LoadingScreen.load(v => this.setState({loaded: true}));
 	}
 	render() {
-		return this.state.loaded?<AppContainer />:<View style={styles.container}><Image source={require('./assets/icon.png')} style={{width: 100, height: 100}}></Image><Text style={{color: '#fff'}}>LOADING...</Text></View>;
+		return this.state.loaded?<AppContainer />:<View style={styles.container}><Image source={require('./assets/icon.png')} style={{width: 100, height: 100}}></Image><ProgressBarAndroid styleAttr="Horizontal" color='#fff' /></View>;
 	}
 }
 

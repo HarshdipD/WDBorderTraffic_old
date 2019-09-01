@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -9,6 +10,7 @@ class AboutScreen extends React.Component {
     });
     render() {
       return(
+        <ScrollView>
         <View style={{flex: 1, flexDirection: 'column'}}>
           <View style={styles.AboutContainer}>
             <Text style={styles.head}>Windsor-Detroit Border Traffic
@@ -38,11 +40,27 @@ class AboutScreen extends React.Component {
                 <TouchableOpacity onPress={() => Linking.openURL('http://Prakort.com')}><Text style={{color: 'blue'}}>prakort.com</Text></TouchableOpacity>
               </View>
             </View>
-            <View style={{flex: 1, flexDirection: 'row', paddingTop: 50, alignSelf: 'center'}}>
-                <Text>Please rate this app on Google Play!</Text>
+            <Text style={styles.head}>Disclaimer
+              <Text style={{fontWeight: 'normal', fontSize: 15, fontFamily: 'open-sans'}}>
+                {"\n"}
+                {"\n"}
+                The Windsor-Detroit Border Traffic app only shows the data provided by Border websites.
+                {"\n"}
+                {"\n"}
+                Therefore, no guarantee or representation is made as to the accuracy or completeness of the information provided.
+              </Text>
+            </Text>
+            <View style={{flex: 1, flexDirection: 'row', paddingTop: 30, alignSelf: 'center'}}>
+                <Text>Please rate this app on Google Play!
+                {"\n"}
+                {"\n"}
+                {"\n"}
+                {"\n"}
+                </Text>
             </View>   
           </View>
         </View>
+        </ScrollView>
         
       );
     }

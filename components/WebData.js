@@ -18,9 +18,9 @@ class WebData extends Component{
     fetchData = async()=>
     { 
   
-      try{
+    try{
 
-      const res = await fetch('http://192.168.0.26:3003/ready');
+      const res = await fetch('https://pure-ocean-75553.herokuapp.com/tunnel');
       const users = await res.json();
       var a = this.state.key;
       var result = users[0][a];

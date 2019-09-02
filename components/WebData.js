@@ -8,7 +8,7 @@ class WebData extends Component{
       super(props);
         this.state={
           
-          data: [],
+          data: {},
           key: this.props.value,
           time: '',
           
@@ -20,12 +20,12 @@ class WebData extends Component{
   
     try{
 
-      const res = await fetch('https://pure-ocean-75553.herokuapp.com/tunnel');
+      const res = await fetch('https://pure-ocean-75553.herokuapp.com/combine');
       const users = await res.json();
+      console.log(users)
       var a = this.state.key;
-      var result = users[0][a];
-      this.setState({data: users,time:result});
-      console.log(users);
+      var result = users[a];
+      this.setState({data: users,time: result});
       console.log(result);
   
       
@@ -40,20 +40,10 @@ class WebData extends Component{
   
       render(){
           return(
-          
-                  <FlatList
-                  data={this.state.data}
-                  value={this.state.data}
-                  keyExtractor={(item,index)=> index.toString()}
-                  renderItem={({item})=>
                   <View>
                       <Text style={{textAlign: 'center'}}>{this.state.time}
                       </Text>
                       </View>
-                  }>
-  
-              </FlatList>
-  
           )
       }
   }

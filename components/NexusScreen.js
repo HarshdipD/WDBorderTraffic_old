@@ -19,8 +19,15 @@ class NexusScreen extends React.Component {
 <View style={HomeStyle.container}>
 				<View style={HomeStyle.CompareContainer}>
 					<View>
-						<Text style={HomeStyle.CompareText}>CA to US</Text>
+					<Text style={HomeStyle.CompareText}>CA to US</Text>
 						<View style={{flex: 1, flexDirection: 'row'}}>
+							<Text>As of </Text><WebData value='B_Time_CA_US'></WebData>
+							<WebData value='COMP_Nexus_CA_US'></WebData>
+						</View>
+						<Text style={HomeStyle.CompareText}>US to CA</Text>
+						<View style={{flex: 1, flexDirection: 'row'}}>
+							<Text>As of </Text><WebData value='B_Time_US_CA'></WebData>
+							<WebData value='COMP_Nexus_US_CA'></WebData>
 						</View>
 					</View>
 				</View>
@@ -48,6 +55,7 @@ class NexusScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
+										<WebData value="B_Nexus_US_CA"></WebData>
 									</View>
 								</View>
 
@@ -61,6 +69,7 @@ class NexusScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
+									<WebData value="B_Nexus_CA_US"></WebData>
 									</View>
 								</View>
 							</View>
@@ -91,6 +100,7 @@ class NexusScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
+									<WebData value="T_Nexus_US_CA"></WebData>
 									</View>
 								</View>
 
@@ -104,6 +114,7 @@ class NexusScreen extends React.Component {
 									</View>
 									<Divider style={{ backgroundColor: 'grey', height: 1 }} />
 									<View style={ HomeStyle.tableRow }>
+									<WebData value="T_Nexus_US_CA"></WebData>
 									</View>
 								</View>
 							</View>

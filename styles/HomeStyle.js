@@ -43,9 +43,10 @@ const HomeStyle = StyleSheet.create({
     CompareText: {
       fontSize: 15,
       textAlign: 'center',
+      fontWeight: 'bold'
     },
     tableLay: {
-      flex: 2,
+      flex: 4,
       flexDirection: 'row',
       marginTop: 20,
       marginBottom: 40,
@@ -53,7 +54,7 @@ const HomeStyle = StyleSheet.create({
       alignItems: 'center', 
     },
     tableRow: {
-      flex: 1,
+      flex: 2,
       alignSelf: 'stretch',
       flexDirection: 'row',
       alignContent: 'center',
@@ -75,6 +76,23 @@ const HomeStyle = StyleSheet.create({
     dataBox:{
       alignContent: 'center',
     },
+    timeRow: {
+      flex: 1,
+      flexDirection: 'row',
+      alignContent: 'center',
+      alignItems: 'center', 
+    },
+    timeCol:{
+      flex: 1,
+      alignSelf: 'stretch',
+      flexDirection: 'row',
+      alignContent: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingTop: 10,
+      color: '#fff'
+    }
+
 });
 
 module.exports = HomeStyle;

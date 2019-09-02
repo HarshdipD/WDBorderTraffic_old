@@ -41,9 +41,8 @@ class WebData extends Component{
       render(){
           return(
                   <View>
-                      <Text style={{textAlign: 'center'}}>{this.state.time}
-                      </Text>
-                      </View>
+                      <Text style={{textAlign: 'center'}}>{this.state.time}</Text>
+                  </View>
           )
       }
   }

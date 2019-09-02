@@ -18,13 +18,13 @@ class CommercialVehicleScreen extends React.Component {
 				<View style={HomeStyle.CompareContainer}>
 					<View>
 						<Text style={HomeStyle.CompareText}>CA to US</Text>
-						<View style={{flex: 1, flexDirection: 'row'}}>
-							<Text>As of </Text><WebData value='B_Time_CA_US'></WebData>
+						<View>
+							<WebData value='B_Time_CA_US'></WebData>
 							<WebData value='COMP_Com_CA_US'></WebData>
 						</View>
 						<Text style={HomeStyle.CompareText}>US to CA</Text>
-						<View style={{flex: 1, flexDirection: 'row'}}>
-							<Text>As of </Text><WebData value='B_Time_US_CA'></WebData>
+						<View>
+							<WebData value='B_Time_US_CA'></WebData>
 							<WebData value='COMP_Com_US_CA'></WebData>
 						</View>
 					</View>

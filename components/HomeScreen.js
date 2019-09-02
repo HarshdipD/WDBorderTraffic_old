@@ -16,14 +16,12 @@ class HomeScreen extends React.Component {
 				<View style={HomeStyle.CompareContainer}>
 					<View>
 						<Text style={HomeStyle.CompareText}>CA to US</Text>
-						<View style={{flex: 1, flexDirection: 'row'}}>
-							<Text>As of </Text>
+						<View>
 							<WebData value='B_Time_CA_US'></WebData>
 							<WebData value='COMP_CAR_CA_US'></WebData>
 						</View>
 						<Text style={HomeStyle.CompareText}>US to CA</Text>
-						<View style={{flex: 1, flexDirection: 'row'}}>
-							<Text>As of </Text>
+						<View>
 							<WebData value='B_Time_US_CA'></WebData>
 							<WebData value='COMP_CAR_US_CA'></WebData>
 						</View>
